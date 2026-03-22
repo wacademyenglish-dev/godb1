@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOLFSTATION · God of War · B1</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   WOLFSTATION · GOD OF WAR · DESIGN SYSTEM
+══════════════════════════════════════════════ */
+:root{
+  --void:#050505; --abyss:#0b0b0b; --stone:#131313; --iron:#1a1a1a;
+  --ash:#222; --ember-dark:#2a1810;
+  --blood:#A31621; --blood-lo:rgba(163,22,33,.11); --blood-md:rgba(163,22,33,.28); --blood-hi:rgba(163,22,33,.5);
+  --ember:#C84B11; --ember-lo:rgba(200,75,17,.1);
+  --gold:#C9A84C; --gold-lo:rgba(201,168,76,.09); --gold-md:rgba(201,168,76,.24); --gold-hi:rgba(201,168,76,.45);
+  --ok:#22c55e; --ok-lo:rgba(34,197,94,.08); --ok-md:rgba(34,197,94,.22);
+  --ice:#93c5fd; --ice-lo:rgba(147,197,253,.07); --ice-md:rgba(147,197,253,.2);
+  --wh:#F4EFE6; --lt:#C9C0B4; --gr:#6A635C; --dim:rgba(255,255,255,.04); --bdr:rgba(255,255,255,.065);
+  --nav:60px; --r:4px; --rm:10px; --rl:14px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--void);color:var(--wh);font-family:'Crimson Pro',Georgia,serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 100%,rgba(163,22,33,.06) 0%,transparent 65%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");}
+
+/* ── NAV ───────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav);background:rgba(5,5,5,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:600;}
+.nav::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blood-md) 25%,var(--ember-lo) 50%,var(--blood-md) 75%,transparent);}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-axe{font-size:20px;line-height:1;}
+.nav-id{}
+.nav-product{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;letter-spacing:.34em;color:var(--blood);text-transform:uppercase;line-height:1;}
+.nav-lesson{font-family:'Cinzel',serif;font-weight:600;font-size:11px;letter-spacing:.07em;color:var(--lt);line-height:1.3;margin-top:2px;}
+.nav-mid{display:flex;align-items:center;gap:11px;}
+.realm-txt{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--gr);text-transform:uppercase;min-width:70px;}
+.xp-track{width:110px;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;position:relative;}
+.xp-bar{height:100%;background:linear-gradient(90deg,var(--blood),var(--ember));border-radius:2px;width:0%;transition:width .55s cubic-bezier(.4,0,.2,1);}
+.xp-pulse{position:absolute;top:0;right:0;width:18px;height:100%;background:linear-gradient(90deg,transparent,rgba(200,75,17,.5));animation:xpp 2.2s ease-in-out infinite;}
+@keyframes xpp{0%,100%{opacity:0;}50%{opacity:1;}}
+.step-txt{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--gr);min-width:36px;text-align:right;}
+.nav-acts{display:flex;gap:7px;}
+.na{width:30px;height:30px;border-radius:var(--r);border:1px solid var(--bdr);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gr);transition:all .2s;font-family:'Cinzel',serif;}
+.na:hover{border-color:rgba(255,255,255,.15);color:var(--wh);background:var(--dim);}
+.na.on{border-color:var(--blood-md);color:var(--blood);background:var(--blood-lo);}
+
+/* ── CODEX SIDEBAR (VOCAB) ─────────────────── */
+.veil{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:700;opacity:0;pointer-events:none;transition:opacity .3s;}
+.veil.on{opacity:1;pointer-events:all;}
+.codex{position:fixed;top:0;right:0;width:380px;height:100%;background:var(--stone);border-left:1px solid var(--bdr);z-index:710;overflow-y:auto;transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1);}
+.codex::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(180deg,transparent,var(--blood) 25%,var(--ember) 75%,transparent);}
+.codex.open{transform:translateX(0);}
+@media(max-width:500px){.codex{width:100%;}}
+.cx-top{position:sticky;top:0;background:var(--stone);padding:18px 22px 14px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;z-index:1;}
+.cx-label{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:900;letter-spacing:.3em;color:var(--blood);text-transform:uppercase;}
+.cx-x{width:28px;height:28px;border-radius:var(--r);border:1px solid var(--bdr);background:var(--iron);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gr);transition:all .2s;}
+.cx-x:hover{background:var(--ash);color:var(--wh);}
+.cx-body{padding:24px 22px 50px;}
+.cx-emoji{font-size:56px;display:block;text-align:center;margin-bottom:14px;}
+.cx-word{font-family:'Cinzel',serif;font-weight:700;font-size:32px;color:var(--gold);text-align:center;margin-bottom:3px;line-height:1;}
+.cx-pron{font-size:14px;color:var(--gr);text-align:center;margin-bottom:22px;font-style:italic;}
+.cx-sec{margin-bottom:18px;}
+.ctag{display:inline-block;background:var(--blood-lo);border:1px solid var(--blood-md);border-radius:2px;padding:2px 9px;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:800;letter-spacing:.16em;color:var(--blood);text-transform:uppercase;margin-bottom:7px;}
+.ctag.g{background:var(--gold-lo);border-color:var(--gold-md);color:var(--gold);}
+.cx-text{font-size:15px;line-height:1.75;color:var(--lt);}
+.cx-quote{background:var(--iron);border-left:3px solid var(--blood);padding:13px 17px;font-size:14px;font-style:italic;color:var(--lt);border-radius:0 var(--rm) var(--rm) 0;line-height:1.7;margin-top:10px;}
+.cx-spk{background:var(--blood-lo);border:1px solid var(--blood-md);border-radius:var(--rm);padding:16px 18px;margin-top:18px;}
+.cx-spk-hd{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:900;letter-spacing:.22em;color:var(--blood);text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:7px;}
+.cx-spk-hd::before{content:'⚔';font-size:13px;}
+.cx-spk p{font-size:15px;color:var(--lt);line-height:1.75;}
+.cx-start{background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:var(--rm);padding:10px 14px;font-size:14px;color:var(--lt);font-style:italic;line-height:1.6;margin-top:8px;}
+.cx-start strong{color:var(--gold);font-style:normal;}
+
+/* ── WAR ROOM (WHITEBOARD) ─────────────────── */
+.warroom{position:fixed;top:0;left:0;width:300px;height:100%;background:var(--abyss);border-right:1px solid var(--bdr);z-index:590;transform:translateX(-100%);transition:transform .38s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.warroom::after{content:'';position:absolute;top:0;right:0;width:2px;height:100%;background:linear-gradient(180deg,transparent,var(--blood-md) 30%,var(--ember-lo) 70%,transparent);}
+.warroom.open{transform:translateX(0);}
+.wr-hd{padding:14px 16px;border-bottom:1px solid var(--bdr);flex-shrink:0;}
+.wr-title{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--gold);margin-bottom:2px;display:flex;align-items:center;gap:7px;}
+.wr-title::before{content:'🗡';font-size:14px;}
+.wr-sub{font-size:11px;color:var(--gr);font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;}
+.wr-tabs{display:flex;gap:5px;padding:10px 14px 0;flex-shrink:0;}
+.wtab{background:var(--iron);border:1px solid var(--bdr);border-radius:var(--r) var(--r) 0 0;padding:6px 11px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;color:var(--gr);cursor:pointer;transition:all .18s;text-transform:uppercase;}
+.wtab.on{background:var(--ash);color:var(--gold);border-color:var(--gold-md);}
+.wtab:hover:not(.on){color:var(--lt);}
+.wr-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.wr-ta{flex:1;background:transparent;border:none;border-top:1px solid var(--bdr);outline:none;color:var(--wh);font-family:'Crimson Pro',serif;font-size:15px;padding:14px 16px;resize:none;line-height:1.7;}
+.wr-ta::placeholder{color:rgba(255,255,255,.14);font-style:italic;}
+.wr-btns{padding:10px 14px;border-top:1px solid var(--bdr);display:flex;gap:6px;flex-shrink:0;}
+.wbtn{flex:1;background:var(--iron);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 4px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--gr);cursor:pointer;transition:all .18s;text-align:center;text-transform:uppercase;}
+.wbtn:hover{color:var(--lt);border-color:rgba(255,255,255,.14);}
+.wbtn.b{background:var(--blood-lo);border-color:var(--blood-md);color:var(--blood);}
+.wr-saved{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--blood);padding:4px 14px;display:none;letter-spacing:.1em;text-transform:uppercase;}
+
+/* ── JUMP PANEL ────────────────────────────── */
+.jump{position:fixed;top:var(--nav);right:0;width:290px;background:var(--stone);border-left:1px solid var(--bdr);border-bottom:1px solid var(--bdr);border-radius:0 0 0 var(--rl);z-index:595;transform:translateY(-110%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow:hidden;box-shadow:-8px 8px 40px rgba(0,0,0,.8);}
+.jump.open{transform:translateY(0);}
+.jump-hd{padding:12px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.jump-htitle{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:900;letter-spacing:.26em;color:var(--blood);text-transform:uppercase;}
+.jump-search{width:calc(100% - 28px);margin:10px 14px 0;display:block;background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:var(--r);color:var(--wh);font-family:'Crimson Pro',serif;font-size:14px;padding:8px 12px;outline:none;transition:border-color .2s;}
+.jump-search:focus{border-color:var(--blood-md);}
+.jump-search::placeholder{color:rgba(255,255,255,.2);font-style:italic;}
+.jump-list{max-height:calc(100vh - var(--nav) - 100px);overflow-y:auto;padding:8px 0 14px;}
+.jump-list::-webkit-scrollbar{width:3px;}
+.jump-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
+.jsec{padding:8px 16px 3px;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:900;letter-spacing:.2em;color:rgba(255,255,255,.17);text-transform:uppercase;}
+.jitem{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .15s;}
+.jitem:hover{background:rgba(255,255,255,.04);}
+.jitem.cur{background:var(--blood-lo);}
+.jitem.cur .jnum{background:var(--blood);color:var(--wh);border-color:var(--blood);}
+.jnum{width:22px;height:22px;border-radius:var(--r);background:rgba(255,255,255,.05);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:9px;font-weight:700;color:var(--gr);flex-shrink:0;}
+.jname{font-size:13px;color:var(--lt);font-family:'Crimson Pro',serif;line-height:1.3;}
+
+/* ── LESSON LAYOUT ─────────────────────────── */
+.lesson{padding-top:calc(var(--nav) + 22px);padding-bottom:110px;position:relative;z-index:1;min-height:100vh;}
+.screen{display:none;max-width:860px;margin:0 auto;padding:26px 22px;animation:fadeup .42s ease both;}
+.screen.on{display:block;}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── SECTION BADGE ─────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:7px;background:var(--blood-lo);border:1px solid var(--blood-md);border-radius:2px;padding:5px 14px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.26em;color:var(--blood);text-transform:uppercase;margin-bottom:22px;}
+.bdot{width:5px;height:5px;background:var(--blood);border-radius:50%;animation:bdot 2s infinite;}
+@keyframes bdot{0%,100%{opacity:1;}50%{opacity:.1;}}
+
+/* ── TYPOGRAPHY ────────────────────────────── */
+h2{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(22px,3.2vw,34px);line-height:1.1;margin-bottom:10px;letter-spacing:.02em;}
+h3{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(14px,2vw,18px);margin-bottom:10px;color:var(--lt);}
+p{font-size:clamp(14px,1.8vw,17px);line-height:1.82;color:var(--lt);}
+.muted{color:var(--gr);font-size:13px;}
+.gc{color:var(--gold);}
+.rc{color:var(--blood);}
+.mt8{margin-top:8px;}.mt12{margin-top:12px;}.mt16{margin-top:16px;}.mt20{margin-top:20px;}
+.divider{height:1px;background:var(--bdr);margin:16px 0;}
+
+/* ── CARDS ─────────────────────────────────── */
+.card{background:var(--stone);border:1px solid var(--bdr);border-radius:var(--rm);padding:24px;margin-bottom:14px;}
+.cblood{background:linear-gradient(135deg,rgba(163,22,33,.09),rgba(163,22,33,.01));border-color:var(--blood-md);}
+.cgold{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.01));border-color:var(--gold-md);}
+.cdark{background:var(--abyss);border-color:var(--bdr);}
+.cinset{background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:var(--rm);padding:16px 20px;margin-top:12px;}
+
+/* ── BUTTONS ────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:2px;border:none;cursor:pointer;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;transition:all .22s;white-space:nowrap;}
+.bblood{background:var(--blood);color:var(--wh);box-shadow:0 0 22px rgba(163,22,33,.28);}
+.bblood:hover{background:#b91c2a;box-shadow:0 0 34px rgba(163,22,33,.5);transform:translateY(-1px);}
+.bgold{background:transparent;border:1px solid var(--gold-md);color:var(--gold);}
+.bgold:hover{background:var(--gold-lo);}
+.bghost{background:transparent;border:1px solid var(--bdr);color:var(--gr);}
+.bghost:hover{border-color:rgba(255,255,255,.17);color:var(--lt);}
+.nav-row{display:flex;align-items:center;justify-content:space-between;margin-top:26px;gap:12px;flex-wrap:wrap;}
+
+/* ── FEEDBACK ───────────────────────────────── */
+.fb{border-radius:var(--rm);padding:13px 17px;font-size:clamp(13px,1.7vw,16px);line-height:1.65;display:none;margin-top:11px;}
+.fb.show{display:block;}
+.fb.ok{background:var(--ok-lo);border:1px solid var(--ok-md);color:var(--ok);}
+.fb.bad{background:var(--blood-lo);border:1px solid var(--blood-md);color:#f87171;}
+.fb.info{background:var(--dim);border:1px solid var(--bdr);color:rgba(255,255,255,.72);}
+.fb.gold{background:var(--gold-lo);border:1px solid var(--gold-md);color:var(--gold);}
+
+/* ── MCQ ────────────────────────────────────── */
+.mcq{display:flex;flex-direction:column;gap:9px;margin-top:14px;}
+.mop{background:var(--iron);border:1px solid var(--bdr);border-radius:var(--r);padding:clamp(13px,1.8vw,17px) 18px;cursor:pointer;font-size:clamp(14px,1.9vw,17px);font-family:'Crimson Pro',serif;transition:all .18s;display:flex;align-items:center;gap:14px;color:var(--lt);user-select:none;min-height:54px;}
+.mop:hover:not(.lk){border-color:rgba(255,255,255,.14);background:var(--ash);}
+.mop.ok{border-color:var(--ok-md);background:var(--ok-lo);color:var(--ok);}
+.mop.no{border-color:var(--blood-md);background:var(--blood-lo);color:#f87171;}
+.mop.rev{border-color:rgba(34,197,94,.22);background:rgba(34,197,94,.04);color:rgba(34,197,94,.65);}
+.mop.lk{pointer-events:none;}
+.oky{width:28px;height:28px;border-radius:var(--r);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:10px;font-weight:700;flex-shrink:0;color:var(--gr);transition:all .18s;}
+.mop.ok .oky{background:var(--ok-lo);color:var(--ok);border-color:var(--ok-md);}
+.mop.no .oky{background:var(--blood-lo);color:#f87171;border-color:var(--blood-md);}
+
+/* ── SPEAK BOX ──────────────────────────────── */
+.spk{background:var(--blood-lo);border:1px solid var(--blood-md);border-radius:var(--rm);padding:18px 20px;margin-top:16px;}
+.spk-hd{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.24em;color:var(--blood);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.spk-hd::before{content:'⚔';font-size:13px;}
+.spk p{font-size:clamp(14px,1.9vw,17px);color:var(--lt);line-height:1.78;}
+.starter{background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:var(--rm);padding:11px 16px;margin-top:10px;font-size:clamp(13px,1.8vw,16px);color:var(--lt);font-style:italic;line-height:1.65;}
+.starter strong{color:var(--gold);font-style:normal;}
+
+/* ── VOCAB WORD ─────────────────────────────── */
+.vw{color:var(--gold);border-bottom:1px dotted var(--gold);cursor:pointer;font-weight:500;transition:all .15s;padding:1px 3px;border-radius:2px;}
+.vw:hover{background:var(--gold-lo);border-bottom-style:solid;}
+
+/* ── GRAMMAR CLICK ──────────────────────────── */
+.gw{color:var(--ice);border-bottom:1px dotted var(--ice);cursor:pointer;font-weight:600;padding:1px 3px;border-radius:2px;transition:all .15s;}
+.gw:hover{background:var(--ice-lo);border-bottom-style:solid;}
+.gtip{background:var(--ice-lo);border:1px solid var(--ice-md);border-radius:var(--rm);padding:13px 17px;font-size:clamp(13px,1.7vw,15px);color:var(--lt);display:none;margin-top:9px;line-height:1.72;}
+.gtip.show{display:block;}
+.gtip strong{color:var(--ice);}
+
+/* ── TRANSCRIPT ─────────────────────────────── */
+.trblk{background:var(--abyss);border-left:3px solid var(--blood);border-radius:0 var(--rm) var(--rm) 0;padding:18px 22px;font-size:clamp(15px,2vw,18px);line-height:2.15;color:var(--lt);margin-bottom:10px;font-style:italic;}
+.trtime{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--gr);font-style:normal;display:block;margin-bottom:7px;text-transform:uppercase;}
+.who{font-family:'Cinzel',serif;font-weight:600;font-size:11px;color:var(--blood);font-style:normal;text-transform:uppercase;letter-spacing:.1em;}
+
+/* ── FILL BLANK ─────────────────────────────── */
+.blline{font-size:clamp(16px,2.2vw,20px);line-height:2.7;color:var(--wh);font-family:'Crimson Pro',serif;margin-bottom:8px;}
+.blinput{background:transparent;border:none;border-bottom:2px solid var(--gold);color:var(--gold);font-size:clamp(16px,2.2vw,20px);font-family:'Crimson Pro',serif;width:140px;outline:none;text-align:center;padding:2px 6px;transition:all .2s;}
+.blinput.ok{border-bottom-color:var(--ok);color:var(--ok);}
+.blinput.no{border-bottom-color:var(--blood);color:#f87171;}
+
+/* ── TABLE ──────────────────────────────────── */
+.gtbl{width:100%;border-collapse:collapse;}
+.gtbl th{background:rgba(163,22,33,.09);border:1px solid var(--bdr);padding:10px 15px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--blood);text-align:left;}
+.gtbl td{border:1px solid var(--bdr);padding:10px 15px;font-size:clamp(13px,1.8vw,16px);color:var(--lt);font-family:'Crimson Pro',serif;}
+.gtbl tr:hover td{background:rgba(255,255,255,.012);}
+.gh{color:var(--gold);font-weight:600;}
+
+/* ── VIDEO ──────────────────────────────────── */
+.yt{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--rm);margin:14px 0;border:1px solid var(--bdr);}
+.yt iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:var(--rm);}
+.yt-badge{display:inline-flex;align-items:center;gap:8px;background:#000;border:1px solid var(--blood-md);border-radius:2px;padding:5px 14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--blood);text-transform:uppercase;margin-bottom:10px;}
+
+/* ── TEXTAREA ───────────────────────────────── */
+.ta{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--bdr);border-radius:var(--rm);color:var(--wh);font-family:'Crimson Pro',serif;font-size:clamp(14px,1.9vw,17px);padding:14px 16px;resize:vertical;outline:none;min-height:80px;line-height:1.72;transition:border-color .2s;}
+.ta:focus{border-color:var(--blood-md);}
+.ta::placeholder{color:rgba(255,255,255,.18);font-style:italic;}
+
+/* ── ORDERING ───────────────────────────────── */
+.ord-list{display:flex;flex-direction:column;gap:9px;}
+.ord-item{background:var(--iron);border:1px solid var(--bdr);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:clamp(14px,1.9vw,17px);font-family:'Crimson Pro',serif;cursor:grab;transition:all .18s;user-select:none;}
+.ord-item:active{cursor:grabbing;}
+.ord-item.dragging-ord{opacity:.2;transform:scale(.97);}
+.ord-item.drag-over-ord{border-color:var(--gold);background:var(--gold-lo);transform:translateY(-2px);}
+.ord-handle{font-size:16px;color:rgba(255,255,255,.2);flex-shrink:0;}
+.ord-num{width:26px;height:26px;background:var(--blood-lo);border:1px solid var(--blood-md);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--blood);flex-shrink:0;transition:all .2s;}
+
+/* ── MATCH ──────────────────────────────────── */
+.mitem{background:var(--iron);border:1px solid var(--bdr);border-radius:var(--r);padding:12px 16px;margin-bottom:8px;cursor:pointer;font-size:clamp(13px,1.8vw,16px);font-family:'Crimson Pro',serif;transition:all .18s;text-align:center;user-select:none;}
+.mitem:hover{background:var(--ash);}
+.mitem.sel{border-color:var(--gold);background:var(--gold-lo);color:var(--gold);}
+.mitem.mok{border-color:var(--ok-md);background:var(--ok-lo);color:var(--ok);pointer-events:none;}
+.mitem.mno{border-color:var(--blood-md);background:var(--blood-lo);color:#f87171;}
+
+/* ── DECISION ───────────────────────────────── */
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px;}
+@media(max-width:500px){.dec-grid{grid-template-columns:1fr;}}
+.dcard{background:var(--iron);border:1px solid var(--bdr);border-radius:var(--rm);padding:20px 18px;cursor:pointer;transition:all .22s;font-size:clamp(13px,1.8vw,16px);line-height:1.6;color:var(--lt);font-family:'Crimson Pro',serif;}
+.dcard:hover{background:var(--ash);border-color:rgba(255,255,255,.12);}
+.dcard.chosen{border-color:var(--gold);background:var(--gold-lo);}
+.dcard-icon{font-size:26px;margin-bottom:9px;display:block;}
+.dcard-title{font-family:'Cinzel',serif;font-size:clamp(12px,1.8vw,15px);font-weight:600;color:var(--gold);margin-bottom:7px;}
+
+/* ── CONVO ──────────────────────────────────── */
+.convo{display:flex;flex-direction:column;gap:11px;margin-top:14px;}
+.msg{display:flex;gap:10px;align-items:flex-end;}
+.msg.r{flex-direction:row-reverse;}
+.mbub{max-width:78%;background:var(--iron);border:1px solid var(--bdr);border-radius:16px;border-bottom-left-radius:4px;padding:13px 17px;font-size:clamp(14px,1.9vw,17px);line-height:1.72;color:var(--lt);font-family:'Crimson Pro',serif;}
+.msg.r .mbub{background:var(--blood-lo);border-color:var(--blood-md);border-bottom-right-radius:4px;border-bottom-left-radius:16px;}
+.mav{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--iron);border:1px solid var(--bdr);}
+
+/* ── COVER ──────────────────────────────────── */
+.cover-wrap{min-height:calc(100vh - var(--nav));display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;padding:40px 22px;}
+.cover-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 50%,rgba(163,22,33,.13) 0%,transparent 58%),radial-gradient(ellipse at 80% 20%,rgba(200,75,17,.07) 0%,transparent 50%),linear-gradient(180deg,var(--void) 0%,#0d0808 100%);}
+.cover-runes{position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;font-size:clamp(140px,22vw,300px);color:rgba(163,22,33,.04);font-family:'Cinzel',serif;font-weight:900;letter-spacing:-.05em;user-select:none;pointer-events:none;text-shadow:0 0 80px rgba(163,22,33,.07);}
+.cover-content{position:relative;z-index:1;max-width:720px;}
+.cover-eyebrow{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:.32em;color:var(--blood);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.cover-eyebrow::before{content:'';width:28px;height:1px;background:var(--blood);display:block;}
+.cover-h1{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(44px,9vw,92px);line-height:.9;letter-spacing:-.02em;color:var(--wh);margin-bottom:6px;text-shadow:0 0 60px rgba(163,22,33,.28);}
+.cover-h1 em{color:var(--blood);font-style:normal;display:block;}
+.cover-h2{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(16px,3vw,28px);color:var(--gold);letter-spacing:.18em;margin-bottom:14px;text-transform:uppercase;}
+.cover-desc{font-size:clamp(14px,1.8vw,18px);color:var(--gr);max-width:540px;line-height:1.78;margin-bottom:26px;}
+.cover-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+.cpill{background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:2px;padding:4px 13px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.13em;color:var(--gr);text-transform:uppercase;}
+.cover-line{width:56px;height:1px;background:var(--blood);margin-bottom:18px;box-shadow:0 0 10px var(--blood);}
+
+/* ── GUIDE GRID ─────────────────────────────── */
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+@media(max-width:520px){.gg{grid-template-columns:1fr;}}
+.gb{background:rgba(0,0,0,.28);border:1px solid var(--bdr);border-radius:var(--rm);padding:16px 18px;}
+.gb h4{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--blood);margin-bottom:10px;}
+.gb ul{list-style:none;}
+.gb li{font-size:clamp(12px,1.6vw,14px);color:rgba(255,255,255,.6);padding:3px 0;display:flex;gap:8px;line-height:1.45;font-family:'Crimson Pro',serif;}
+.gb li::before{content:'ᚱ';color:var(--blood);flex-shrink:0;font-size:11px;}
+
+/* ── PLATFORMS ──────────────────────────────── */
+.plat-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+.plat-card{background:var(--iron);border:1px solid var(--bdr);border-radius:var(--rm);padding:16px 20px;display:flex;align-items:center;gap:12px;font-size:clamp(14px,1.9vw,17px);flex:1;min-width:160px;}
+.plat-icon{font-size:24px;flex-shrink:0;}
+.plat-name{font-family:'Cinzel',serif;font-size:clamp(13px,1.8vw,16px);font-weight:600;color:var(--lt);}
+.plat-year{font-size:12px;color:var(--gr);margin-top:2px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;}
+
+/* ── TAG ROW ────────────────────────────────── */
+.tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.tag{display:inline-block;background:var(--blood-lo);border:1px solid var(--blood-md);border-radius:2px;padding:3px 10px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--blood);text-transform:uppercase;}
+.gtag{display:inline-block;background:var(--gold-lo);border:1px solid var(--gold-md);border-radius:2px;padding:3px 10px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;}
+
+/* ── SKIP ───────────────────────────────────── */
+.skip-wrap{display:flex;justify-content:flex-end;margin-top:11px;}
+.skip-btn{background:transparent;border:none;color:rgba(255,255,255,.2);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.1em;cursor:pointer;padding:5px;transition:color .2s;text-transform:uppercase;display:flex;align-items:center;gap:4px;}
+.skip-btn:hover{color:rgba(255,255,255,.45);}
+.skip-btn::after{content:'→';}
+
+/* ── COMPLETION ─────────────────────────────── */
+.cbadge{width:88px;height:88px;background:linear-gradient(135deg,var(--blood),var(--ember));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 20px;animation:pop .7s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 44px rgba(163,22,33,.45);}
+@keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+.cscore{font-family:'Cinzel',serif;font-size:clamp(44px,7vw,70px);font-weight:900;color:var(--blood);text-align:center;text-shadow:0 0 30px rgba(163,22,33,.45);}
+.clbl{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;letter-spacing:.24em;color:var(--gr);text-transform:uppercase;margin-top:6px;}
+</style>
+</head>
+<body>
+
+<!-- CODEX SIDEBAR -->
+<div class="veil" id="veil" onclick="closeCX()"></div>
+<aside class="codex" id="codex">
+  <div class="cx-top"><span class="cx-label">ᚱ Codex Entry</span><div class="cx-x" onclick="closeCX()">✕</div></div>
+  <div class="cx-body">
+    <span class="cx-emoji" id="cx-emoji">⚔</span>
+    <div class="cx-word" id="cx-word">—</div>
+    <div class="cx-pron" id="cx-pron">—</div>
+    <div class="cx-sec"><div class="ctag">Meaning</div><p class="cx-text" id="cx-mean">—</p></div>
+    <div class="cx-sec"><div class="ctag">Synonym</div><p class="cx-text" id="cx-syn">—</p></div>
+    <div class="cx-sec"><div class="ctag">Example</div><div class="cx-quote" id="cx-ex">—</div></div>
+    <div class="cx-sec"><div class="ctag g">In the Trailer</div><div class="cx-quote" id="cx-vid">—</div></div>
+    <div class="cx-spk"><div class="cx-spk-hd">Your Turn</div><p id="cx-q">—</p><div class="cx-start" id="cx-s1">—</div><div class="cx-start" id="cx-s2" style="display:none;">—</div></div>
+  </div>
+</aside>
+
+<!-- WAR ROOM -->
+<div class="warroom" id="warroom">
+  <div class="wr-hd"><div class="wr-title">The War Room</div><div class="wr-sub">Teacher · Live Board</div></div>
+  <div class="wr-tabs">
+    <div class="wtab on" id="wt-notes" onclick="wbTab('notes')">Notes</div>
+    <div class="wtab" id="wt-vocab" onclick="wbTab('vocab')">Vocab</div>
+    <div class="wtab" id="wt-errors" onclick="wbTab('errors')">Errors</div>
+    <div class="wtab" id="wt-hw" onclick="wbTab('hw')">Mission</div>
+  </div>
+  <div class="wr-area"><textarea class="wr-ta" id="wb-ta" placeholder="Write notes for your student here…&#10;&#10;The student sees this in real time!"></textarea></div>
+  <div class="wr-btns">
+    <div class="wbtn" onclick="wbClear()">🗑 Clear</div>
+    <div class="wbtn b" onclick="wbSave()">⚔ Save</div>
+    <div class="wbtn" onclick="wbCopy()">📋 Copy</div>
+  </div>
+  <div class="wr-saved" id="wr-saved">⚔ Saved</div>
+</div>
+
+<!-- JUMP PANEL -->
+<div class="jump" id="jump-panel">
+  <div class="jump-hd"><span class="jump-htitle">ᚱ Navigate Realms</span><div class="na" style="width:24px;height:24px;font-size:11px;" onclick="toggleJump()">✕</div></div>
+  <input class="jump-search" id="jump-search" type="text" placeholder="Search realm…" oninput="filterJump(this.value)">
+  <div class="jump-list" id="jump-list"></div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-axe">🪓</div>
+    <div class="nav-id">
+      <div class="nav-product">WolfStation</div>
+      <div class="nav-lesson">God of War · English Through Gaming</div>
+    </div>
+  </div>
+  <div class="nav-mid">
+    <span class="realm-txt" id="realm-txt">Midgard</span>
+    <div class="xp-track"><div class="xp-bar" id="xp-bar"></div><div class="xp-pulse"></div></div>
+    <span class="step-txt" id="step-txt">0/29</span>
+  </div>
+  <div class="nav-acts">
+    <div class="na" id="nav-jump" title="Navigate" onclick="toggleJump()">ᚱ</div>
+    <div class="na" id="nav-wr" title="War Room" onclick="toggleWR()">🗡</div>
+    <div class="na" title="Fullscreen" onclick="toggleFS()">⛶</div>
+  </div>
+</nav>
+
+<main class="lesson">
+
+<!-- ════════════ S0 · TEACHER GUIDE ════════════ -->
+<div class="screen on" id="s0">
+  <div class="badge"><span class="bdot"></span>Teacher Guide · Codex</div>
+  <h2>Lesson Briefing</h2>
+  <p class="muted mt8" style="margin-bottom:18px;">Read before class. Do not show to the student.</p>
+  <div class="card cblood">
+    <div class="tag-row"><span class="tag">B1</span><span class="tag">WolfStation</span><span class="tag">God of War 2018</span><span class="tag">Imperatives</span><span class="tag">~60 min · 30 screens</span></div>
+    <p style="margin-bottom:14px;line-height:1.85;font-size:16px;"><strong>Objective:</strong> The student analyses the God of War E3 trailer, learns 5 key vocabulary words in context, discovers and masters <strong>imperative sentences</strong> (affirmative + negative), and practises speaking about themes of survival, family and character — all at B1 level.</p>
+    <div class="gg">
+      <div class="gb"><h4>5 Vocabulary Words</h4><ul><li>witness</li><li>mercy</li><li>survive</li><li>worthy</li><li>cycle</li></ul></div>
+      <div class="gb"><h4>Grammar Target</h4><ul><li>Affirmative: "Be better."</li><li>Negative: "Do not be sorry."</li><li>With advice: "Remember this."</li><li>B1: tone + intention analysis</li></ul></div>
+      <div class="gb"><h4>WolfStation Method</h4><ul><li>Trailer as the core text</li><li>Scene + tone + intention</li><li>Decision-making scenarios</li><li>Student speaks 80%+</li></ul></div>
+      <div class="gb"><h4>⏸ Pause Moments</h4><ul><li>0:48 "Do not be sorry. Be better."</li><li>1:30 Combat/tone shift</li><li>2:10 "The cycle ends here."</li><li>End — reflection prompt</li></ul></div>
+    </div>
+  </div>
+  <div class="card mt12"><h3>⚠ Before class</h3><p>Open the <strong>War Room</strong> (🗡) and pre-write today's 5 vocabulary words. Encourage the student to watch the trailer before class. This lesson works for students who enjoy gaming, films, or action stories.</p></div>
+  <div class="nav-row"><div></div><button class="btn bblood" onclick="goTo(1)">Enter the Realm →</button></div>
+</div>
+
+<!-- ════════════ S1 · COVER ════════════ -->
+<div class="screen" id="s1">
+  <div class="cover-wrap">
+    <div class="cover-bg"></div>
+    <div class="cover-runes">ᚷᛟᛞ</div>
+    <div class="cover-content">
+      <div class="cover-eyebrow">WolfStation · English Through Gaming</div>
+      <div class="cover-line"></div>
+      <div class="cover-h1">GOD<br><em>OF WAR</em></div>
+      <div class="cover-h2">English · B1 Intermediate</div>
+      <p class="cover-desc">A god stripped of power. A father teaching his son. A world on the edge of destruction. Learn English through one of gaming's most powerful stories.</p>
+      <div class="cover-pills">
+        <span class="cpill">🎮 Game Trailer</span>
+        <span class="cpill">B1 · Intermediate</span>
+        <span class="cpill">Imperatives</span>
+        <span class="cpill">30 Screens</span>
+      </div>
+      <button class="btn bblood" onclick="goTo(2)" style="font-size:13px;padding:15px 38px;">⚔ &nbsp;Begin Your Journey</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ S2 · WARM-UP 1 — LIFE QUESTIONS ════════════ -->
+<div class="screen" id="s2">
+  <div class="badge"><span class="bdot"></span>Warm-Up · Screen 2 of 30</div>
+  <h2>Think About Your Life</h2>
+  <p class="mt8">Before we talk about the game — let's talk about real life. These questions connect directly to the themes of God of War.</p>
+
+  <div class="card mt16">
+    <h3>1. Think about someone who taught you something important in life. Who was it?</h3>
+    <div class="mcq" id="wu1">
+      <div class="mop" onclick="wuPick(this,'wu1','A','wu1-fb')"><span class="oky">A</span>A parent or family member</div>
+      <div class="mop" onclick="wuPick(this,'wu1','B','wu1-fb')"><span class="oky">B</span>A teacher or coach</div>
+      <div class="mop" onclick="wuPick(this,'wu1','C','wu1-fb')"><span class="oky">C</span>A friend or colleague</div>
+      <div class="mop" onclick="wuPick(this,'wu1','D','wu1-fb')"><span class="oky">D</span>I learned mostly on my own</div>
+    </div>
+    <div class="fb" id="wu1-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>2. When you make a mistake, what do you usually do?</h3>
+    <div class="mcq" id="wu2">
+      <div class="mop" onclick="wuPick(this,'wu2','A','wu2-fb')"><span class="oky">A</span>I apologise and feel guilty for a long time</div>
+      <div class="mop" onclick="wuPick(this,'wu2','B','wu2-fb')"><span class="oky">B</span>I try to understand what went wrong and improve</div>
+      <div class="mop" onclick="wuPick(this,'wu2','C','wu2-fb')"><span class="oky">C</span>I move on quickly without thinking too much about it</div>
+      <div class="mop" onclick="wuPick(this,'wu2','D','wu2-fb')"><span class="oky">D</span>It depends on how serious the mistake was</div>
+    </div>
+    <div class="fb" id="wu2-fb"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(3)">Continue →</button>
+  </div>
+</div>
+
+<!-- ════════════ S3 · WARM-UP 2 — MORE QUESTIONS ════════════ -->
+<div class="screen" id="s3">
+  <div class="badge"><span class="bdot"></span>Warm-Up · Screen 3 of 30</div>
+  <h2>Keep Thinking</h2>
+
+  <div class="card mt12">
+    <h3>3. Which of these words describes how you handle difficult challenges?</h3>
+    <div class="mcq" id="wu3">
+      <div class="mop" onclick="wuPick(this,'wu3','A','wu3-fb')"><span class="oky">A</span>💪 I push through and never give up</div>
+      <div class="mop" onclick="wuPick(this,'wu3','B','wu3-fb')"><span class="oky">B</span>🤔 I analyse the problem first, then act</div>
+      <div class="mop" onclick="wuPick(this,'wu3','C','wu3-fb')"><span class="oky">C</span>🤝 I ask for help from people around me</div>
+      <div class="mop" onclick="wuPick(this,'wu3','D','wu3-fb')"><span class="oky">D</span>😤 I get frustrated but eventually find a way</div>
+    </div>
+    <div class="fb" id="wu3-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>4. Do you think it is possible to "break" bad habits or repeat patterns in life?</h3>
+    <div class="mcq" id="wu4">
+      <div class="mop" onclick="wuPick(this,'wu4','A','wu4-fb')"><span class="oky">A</span>Yes — with enough willpower, anyone can change</div>
+      <div class="mop" onclick="wuPick(this,'wu4','B','wu4-fb')"><span class="oky">B</span>Mostly yes — but it takes a long time and hard work</div>
+      <div class="mop" onclick="wuPick(this,'wu4','C','wu4-fb')"><span class="oky">C</span>Sometimes — it depends on the person and the situation</div>
+      <div class="mop" onclick="wuPick(this,'wu4','D','wu4-fb')"><span class="oky">D</span>Not really — people tend to repeat the same patterns</div>
+    </div>
+    <div class="fb" id="wu4-fb"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(4)">Speaking →</button>
+  </div>
+</div>
+
+<!-- ════════════ S4 · WARM-UP SPEAKING ════════════ -->
+<div class="screen" id="s4">
+  <div class="badge"><span class="bdot"></span>Warm-Up Speaking · Screen 4 of 30</div>
+  <h2>Now Speak</h2>
+  <p class="mt8">These questions connect your answers to the themes of the game you're about to see.</p>
+
+  <div class="spk mt16">
+    <div class="spk-hd">Speak Now — Connect to Your Life</div>
+    <p>Answer your teacher using full sentences. Use the starters below.</p>
+    <div class="starter"><strong>When I make a mistake, I usually ___ because ___.</strong></div>
+    <div class="starter"><strong>The person who taught me the most was ___ . They always told me to ___.</strong></div>
+    <div class="starter"><strong>I think breaking bad habits is ___ because ___.</strong></div>
+  </div>
+
+  <div class="card mt16">
+    <h3>🎮 Connection — Think About It</h3>
+    <p style="font-size:16px;line-height:1.85;">In the game you'll see today, a father named <strong>Kratos</strong> says to his son after a mistake: <em style="color:var(--blood);">"Do not be sorry. Be better."</em></p>
+    <p class="mt12">Based on what you know about yourself — do you agree with this idea? Is it better to be sorry, or to simply improve?</p>
+    <div class="mcq" id="wu5">
+      <div class="mop" onclick="wuPick(this,'wu5','A','wu5-fb')"><span class="oky">A</span>"Be sorry" is important — it shows empathy and emotional intelligence</div>
+      <div class="mop" onclick="wuPick(this,'wu5','B','wu5-fb')"><span class="oky">B</span>"Be better" is more useful — action is more important than guilt</div>
+      <div class="mop" onclick="wuPick(this,'wu5','C','wu5-fb')"><span class="oky">C</span>Both are needed — you should feel sorry AND improve</div>
+    </div>
+    <div class="fb" id="wu5-fb"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(5)">About the Game →</button>
+  </div>
+</div>
+
+<!-- ════════════ S5 · GAME SYNOPSIS ════════════ -->
+<div class="screen" id="s5">
+  <div class="badge"><span class="bdot"></span>Game Synopsis · Screen 5 of 30</div>
+  <h2>About the Game</h2>
+
+  <div class="card cblood mt12">
+    <div style="display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;">
+      <div style="font-size:60px;line-height:1;flex-shrink:0;">🪓</div>
+      <div>
+        <div style="font-family:'Cinzel',serif;font-weight:700;font-size:clamp(20px,3vw,28px);color:var(--wh);margin-bottom:6px;">God of War <span style="color:var(--blood);">(2018)</span></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--gr);text-transform:uppercase;margin-bottom:12px;">Action · Adventure · Mythology</div>
+        <p style="font-size:clamp(14px,1.9vw,17px);line-height:1.82;">God of War is an <strong>action-adventure game</strong> developed by Sony Santa Monica. It follows <strong>Kratos</strong> — a former Greek god of war — who now lives in the world of <strong>Norse mythology</strong> with his young son, <strong>Atreus</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt12">
+    <h3>📖 The Story</h3>
+    <p style="font-size:clamp(14px,1.9vw,17px);line-height:1.85;margin-bottom:12px;">After the death of his second wife, Kratos must take Atreus on a dangerous journey across the Norse realms to scatter her ashes at the highest peak. Along the way, Kratos must also teach Atreus how to survive — and how to control his emotions — in a world full of gods, monsters and magic.</p>
+    <p style="font-size:clamp(14px,1.9vw,17px);line-height:1.85;">At its heart, this is a story about <strong>fatherhood</strong>, <strong>identity</strong>, and the struggle to break free from a violent past.</p>
+  </div>
+
+  <div class="card mt12 cgold">
+    <h3>🏆 Awards & Impact</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px;">
+      <div style="background:rgba(0,0,0,.2);border-radius:var(--r);padding:11px 14px;font-size:clamp(12px,1.7vw,14px);"><span style="color:var(--gold);font-weight:600;">Game of the Year</span><br><span style="color:var(--gr);">The Game Awards 2018</span></div>
+      <div style="background:rgba(0,0,0,.2);border-radius:var(--r);padding:11px 14px;font-size:clamp(12px,1.7vw,14px);"><span style="color:var(--gold);font-weight:600;">Best Narrative</span><br><span style="color:var(--gr);">BAFTA Games Awards 2019</span></div>
+      <div style="background:rgba(0,0,0,.2);border-radius:var(--r);padding:11px 14px;font-size:clamp(12px,1.7vw,14px);"><span style="color:var(--gold);font-weight:600;">9.4 — Metacritic</span><br><span style="color:var(--gr);">One of highest rated games ever</span></div>
+      <div style="background:rgba(0,0,0,.2);border-radius:var(--r);padding:11px 14px;font-size:clamp(12px,1.7vw,14px);"><span style="color:var(--gold);font-weight:600;">Ragnarök (2022)</span><br><span style="color:var(--gr);">Sequel · also GOTY nominee</span></div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(6)">Platforms & Info →</button>
+  </div>
+</div>
+
+<!-- ════════════ S6 · PLATFORMS & INFO ════════════ -->
+<div class="screen" id="s6">
+  <div class="badge"><span class="bdot"></span>Platforms · Screen 6 of 30</div>
+  <h2>Where Can You Play It?</h2>
+
+  <div class="plat-grid mt16">
+    <div class="plat-card"><div class="plat-icon">🎮</div><div><div class="plat-name">PlayStation 4</div><div class="plat-year">Original release · April 2018</div></div></div>
+    <div class="plat-card"><div class="plat-icon">🎮</div><div><div class="plat-name">PlayStation 5</div><div class="plat-year">Optimised · 60fps · 2021</div></div></div>
+    <div class="plat-card"><div class="plat-icon">💻</div><div><div class="plat-name">PC (Steam)</div><div class="plat-year">Windows release · January 2022</div></div></div>
+  </div>
+
+  <div class="card mt16">
+    <h3>📋 Key Details</h3>
+    <table class="gtbl">
+      <tr><th>Detail</th><th>Info</th></tr>
+      <tr><td>Developer</td><td>Sony Santa Monica Studio</td></tr>
+      <tr><td>Genre</td><td>Action RPG / Adventure</td></tr>
+      <tr><td>Rating</td><td>PEGI 18 / Mature</td></tr>
+      <tr><td>Playtime</td><td>~20 hours (main story)</td></tr>
+      <tr><td>Sequel</td><td>God of War: Ragnarök (2022)</td></tr>
+      <tr><td>Available on</td><td>PS Now, PS Plus, Steam</td></tr>
+    </table>
+  </div>
+
+  <div class="card mt12">
+    <h3>💬 Discussion</h3>
+    <p style="font-size:16px;line-height:1.85;">Have you ever played a game or watched a film that had a strong father-son relationship? How was it similar or different to what you know about God of War?</p>
+    <textarea class="ta mt12" placeholder="I have / haven't played God of War. I know a story about a father and son called… The relationship is similar / different because…" rows="3"></textarea>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(7)">Pre-Watch →</button>
+  </div>
+</div>
+
+<!-- ════════════ S7 · PRE-WATCH PREDICTION ════════════ -->
+<div class="screen" id="s7">
+  <div class="badge"><span class="bdot"></span>Pre-Watch · Screen 7 of 30</div>
+  <h2>Before You Watch</h2>
+  <p class="mt8">You know the game. Now make predictions about the trailer. Choose what you think you will see.</p>
+
+  <div class="card mt16">
+    <h3>❓ Which of these do you think will appear in the trailer?</h3>
+    <p class="muted mt8" style="margin-bottom:12px;">Choose as many as you think apply.</p>
+    <div style="display:flex;flex-direction:column;gap:9px;" id="pred-checks">
+      <label class="mop" style="cursor:pointer;"><input type="checkbox" style="accent-color:var(--blood);width:16px;height:16px;flex-shrink:0;">&nbsp; A father giving commands and advice to his son</label>
+      <label class="mop" style="cursor:pointer;"><input type="checkbox" style="accent-color:var(--blood);width:16px;height:16px;flex-shrink:0;">&nbsp; Beautiful but dangerous Norse landscapes</label>
+      <label class="mop" style="cursor:pointer;"><input type="checkbox" style="accent-color:var(--blood);width:16px;height:16px;flex-shrink:0;">&nbsp; Combat scenes between Kratos and mythological enemies</label>
+      <label class="mop" style="cursor:pointer;"><input type="checkbox" style="accent-color:var(--blood);width:16px;height:16px;flex-shrink:0;">&nbsp; An emotional moment between father and son</label>
+      <label class="mop" style="cursor:pointer;"><input type="checkbox" style="accent-color:var(--blood);width:16px;height=16px;flex-shrink:0;">&nbsp; Powerful dialogue about survival, strength, or identity</label>
+    </div>
+    <button class="btn bgold mt16" onclick="showPredFB()">Lock in Predictions →</button>
+    <div class="fb" id="pred-fb"></div>
+  </div>
+
+  <div class="spk mt12" id="pred-spk" style="display:none;">
+    <div class="spk-hd">Speak Now — Justify</div>
+    <p>Tell your teacher which prediction you are most confident about — and why.</p>
+    <div class="starter"><strong>I'm most confident that we'll see ___ because ___.</strong></div>
+    <div class="starter"><strong>I'm not sure about ___ because ___.</strong></div>
+  </div>
+
+  <div class="nav-row" id="pred-nav" style="display:none;">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(8)">Watch the Trailer →</button>
+  </div>
+</div>
+
+<!-- ════════════ S8 · VIDEO ════════════ -->
+<div class="screen" id="s8">
+  <div class="badge"><span class="bdot"></span>The Trailer · Screen 8 of 30</div>
+  <h2>Watch & Notice</h2>
+  <p class="mt8">Your teacher will <strong>pause the trailer at 3 moments</strong>. While watching, focus on these 3 things:</p>
+
+  <div class="card cblood mt16">
+    <div style="display:flex;flex-direction:column;gap:11px;margin-top:4px;">
+      <div style="display:flex;gap:13px;font-size:clamp(14px,1.9vw,17px);"><span class="rc" style="font-family:'Cinzel',serif;font-weight:700;flex-shrink:0;">1.</span><span>What is the <strong>relationship</strong> between the two characters?</span></div>
+      <div style="display:flex;gap:13px;font-size:clamp(14px,1.9vw,17px);"><span class="rc" style="font-family:'Cinzel',serif;font-weight:700;flex-shrink:0;">2.</span><span>How does Kratos <strong>speak</strong> to his son? What is his tone?</span></div>
+      <div style="display:flex;gap:13px;font-size:clamp(14px,1.9vw,17px);"><span class="rc" style="font-family:'Cinzel',serif;font-weight:700;flex-shrink:0;">3.</span><span>What <strong>emotions</strong> do you feel while watching?</span></div>
+    </div>
+  </div>
+
+  <div class="yt-badge">🎮 God of War · E3 2016 Reveal Trailer</div>
+  <div class="yt">
+    <iframe src="https://www.youtube.com/embed/TV07cZLWIjc?rel=0&modestbranding=1" title="God of War Trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="card">
+    <h3>📝 Notes while watching:</h3>
+    <textarea class="ta" placeholder="The relationship between them is…&#10;Kratos speaks with a ___ tone…&#10;I feel ___…&#10;The most interesting moment was…" rows="4"></textarea>
+  </div>
+
+  <div class="spk mt12">
+    <div class="spk-hd">First Reaction — Speak Now</div>
+    <p>Tell your teacher your immediate reaction in 3 sentences.</p>
+    <div class="starter"><strong>The trailer made me feel ___ because ___.</strong></div>
+    <div class="starter"><strong>I think Kratos is ___ as a father because ___.</strong></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(9)">Post-Video Questions →</button>
+  </div>
+</div>
+
+<!-- ════════════ S9 · POST-VIDEO Q1 ════════════ -->
+<div class="screen" id="s9">
+  <div class="badge"><span class="bdot"></span>Post-Video · Screen 9 of 30</div>
+  <h2>What Did You See?</h2>
+
+  <div class="card mt12">
+    <h3>1. Where does the trailer take place?</h3>
+    <div class="mcq" id="pv1">
+      <div class="mop" onclick="chkMCQ(this,'pv1','A','B','pv1-fb')"><span class="oky">A</span>Ancient Greece — the original setting of God of War</div>
+      <div class="mop" onclick="chkMCQ(this,'pv1','B','B','pv1-fb')"><span class="oky">B</span>A Norse forest — cold, dark, and full of mythological danger ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'pv1','C','B','pv1-fb')"><span class="oky">C</span>A medieval European castle</div>
+    </div>
+    <div class="fb" id="pv1-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>2. What does Kratos say to Atreus after the boy makes a mistake?</h3>
+    <div class="mcq" id="pv2">
+      <div class="mop" onclick="chkMCQ(this,'pv2','A','C','pv2-fb')"><span class="oky">A</span>"I'm disappointed in you. Try harder next time."</div>
+      <div class="mop" onclick="chkMCQ(this,'pv2','B','C','pv2-fb')"><span class="oky">B</span>"You are not ready for this journey."</div>
+      <div class="mop" onclick="chkMCQ(this,'pv2','C','C','pv2-fb')"><span class="oky">C</span>"Do not be sorry. Be better." ⚔</div>
+    </div>
+    <div class="fb" id="pv2-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>3. What does the boy (Atreus) seem to feel during the trailer?</h3>
+    <div class="mcq" id="pv3">
+      <div class="mop" onclick="chkMCQ(this,'pv3','A','A','pv3-fb')"><span class="oky">A</span>He is nervous, eager to prove himself, and scared of disappointing his father ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'pv3','B','A','pv3-fb')"><span class="oky">B</span>He is relaxed and confident — he has done this many times before</div>
+      <div class="mop" onclick="chkMCQ(this,'pv3','C','A','pv3-fb')"><span class="oky">C</span>He is angry at Kratos for being too hard on him</div>
+    </div>
+    <div class="fb" id="pv3-fb"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(10)">More Questions →</button>
+  </div>
+</div>
+
+<!-- ════════════ S10 · POST-VIDEO Q2 ════════════ -->
+<div class="screen" id="s10">
+  <div class="badge"><span class="bdot"></span>Post-Video · Screen 10 of 30</div>
+  <h2>Go Deeper</h2>
+
+  <div class="card mt12">
+    <h3>4. "The cycle ends here." What does Kratos mean by "cycle"?</h3>
+    <div class="mcq" id="pv4">
+      <div class="mop" onclick="chkMCQ(this,'pv4','A','C','pv4-fb')"><span class="oky">A</span>The day/night cycle of the Norse world</div>
+      <div class="mop" onclick="chkMCQ(this,'pv4','B','C','pv4-fb')"><span class="oky">B</span>The cycle of hunting and gathering food</div>
+      <div class="mop" onclick="chkMCQ(this,'pv4','C','C','pv4-fb')"><span class="oky">C</span>The pattern of violence, anger and destruction in his past ⚔</div>
+    </div>
+    <div class="fb" id="pv4-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>5. What was the most emotionally powerful moment in the trailer? Why?</h3>
+    <textarea class="ta mt10" id="emo-ta" placeholder="The most powerful moment was when ___ because ___. I felt ___ because ___." rows="3"></textarea>
+    <button class="btn bgold mt12" onclick="showEmoFB()">Share Your Interpretation →</button>
+    <div class="fb" id="emo-fb"></div>
+  </div>
+
+  <div class="spk mt12" id="emo-spk" style="display:none;">
+    <div class="spk-hd">Speak Now — Compare Predictions</div>
+    <p>Look back at your predictions from Screen 7. Which ones were correct? Which surprised you?</p>
+    <div class="starter"><strong>I was right about ___ because ___.</strong></div>
+    <div class="starter"><strong>I was surprised that ___. I didn't expect ___.</strong></div>
+  </div>
+
+  <div class="nav-row" id="emo-nav" style="display:none;">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(11)">Post-Video Discussion →</button>
+  </div>
+</div>
+
+<!-- ════════════ S11 · POST-VIDEO DISCUSSION ════════════ -->
+<div class="screen" id="s11">
+  <div class="badge"><span class="bdot"></span>Discussion · Screen 11 of 30</div>
+  <h2>Talk About the Trailer</h2>
+  <p class="mt8">These are open discussion questions. Speak — don't just think! Your teacher will ask follow-ups.</p>
+
+  <div class="card mt16">
+    <h3>🗣 Question 1</h3>
+    <p style="font-size:clamp(15px,2vw,18px);line-height:1.82;margin-bottom:14px;">Kratos says: <em style="color:var(--blood);">"Do not be sorry. Be better."</em> Do you think this is good advice? What kind of father gives advice like this?</p>
+    <div class="spk mt8">
+      <div class="spk-hd">Speak</div>
+      <div class="starter"><strong>I think this is good / bad advice because ___.</strong></div>
+      <div class="starter"><strong>A father who says this probably believes that ___.</strong></div>
+    </div>
+  </div>
+
+  <div class="card mt12">
+    <h3>🗣 Question 2</h3>
+    <p style="font-size:clamp(15px,2vw,18px);line-height:1.82;margin-bottom:14px;">Kratos was a god of war in Ancient Greece. He has killed gods, monsters, and even members of his own family. Now he is trying to be a good father. Do you think people can truly change?</p>
+    <div class="spk mt8">
+      <div class="spk-hd">Speak</div>
+      <div class="starter"><strong>I think people can / cannot truly change because ___.</strong></div>
+      <div class="starter"><strong>Kratos is trying to change by ___. But the difficult part is ___.</strong></div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(12)">Vocabulary →</button>
+  </div>
+</div>
+
+<!-- ════════════ S12–16 · VOCABULARY × 5 ════════════ -->
+<!-- S12: WITNESS -->
+<div class="screen" id="s12">
+  <div class="badge"><span class="bdot"></span>Vocabulary 1 / 5 · Screen 12 of 30</div>
+  <h2>Word: <span class="gc">witness</span></h2>
+  <div class="card cgold mt16">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px;">
+      <span style="font-size:52px;">👁</span>
+      <div><div style="font-family:'Cinzel',serif;font-weight:700;font-size:clamp(24px,4vw,36px);color:var(--gold);">witness</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/ˈwɪt.nəs/ · verb & noun</div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="tag-row"><span class="gtag">Meaning</span></div>
+    <p style="font-size:clamp(14px,1.9vw,17px);">To <strong>see or observe</strong> something happen — especially something important or powerful. As a noun: a person who saw an event.</p>
+    <div class="tag-row mt12"><span class="gtag">Synonym</span></div>
+    <p style="font-size:15px;">observe · see · behold · watch</p>
+    <div class="tag-row mt12"><span class="gtag">Example</span></div>
+    <div class="cinset" style="font-style:italic;font-size:clamp(14px,1.9vw,17px);border-left:3px solid var(--gold);">"The boy witnessed his father's power for the first time — and it changed him forever."</div>
+    <div class="tag-row mt12"><span class="gtag">In the Trailer</span></div>
+    <div class="cinset" style="font-style:italic;font-size:clamp(14px,1.9vw,17px);border-left:3px solid var(--blood);">"The gods of this world have witnessed your failures."</div>
+  </div>
+  <div class="card mt12">
+    <h3>❓ Quick Check — which is correct?</h3>
+    <div class="mcq" id="vq12">
+      <div class="mop" onclick="chkMCQ(this,'vq12','A','B','vq12-fb')"><span class="oky">A</span>"I witnessed my homework last night."</div>
+      <div class="mop" onclick="chkMCQ(this,'vq12','B','B','vq12-fb')"><span class="oky">B</span>"She witnessed something incredible during the battle." ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'vq12','C','B','vq12-fb')"><span class="oky">C</span>"He witnessed a sandwich for breakfast."</div>
+    </div>
+    <div class="fb" id="vq12-fb"></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>I once witnessed ___. It made me feel ___.</strong></div>
+    <div class="starter"><strong>In the trailer, Atreus witnesses ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="btn bghost" onclick="goBack()">← Back</button><button class="btn bblood" onclick="goTo(13)">Next Word →</button></div>
+</div>
+
+<!-- S13: MERCY -->
+<div class="screen" id="s13">
+  <div class="badge"><span class="bdot"></span>Vocabulary 2 / 5 · Screen 13 of 30</div>
+  <h2>Word: <span class="gc">mercy</span></h2>
+  <div class="card cgold mt16">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px;"><span style="font-size:52px;">🙏</span><div><div style="font-family:'Cinzel',serif;font-weight:700;font-size:clamp(24px,4vw,36px);color:var(--gold);">mercy</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/ˈmɜː.si/ · noun</div></div></div>
+    <div class="divider"></div>
+    <div class="tag-row"><span class="gtag">Meaning</span></div>
+    <p style="font-size:clamp(14px,1.9vw,17px);">Compassion or forgiveness shown to someone you have power over — choosing <em>not</em> to harm them when you could.</p>
+    <div class="tag-row mt12"><span class="gtag">Synonym</span></div><p style="font-size:15px;">compassion · forgiveness · clemency · pity</p>
+    <div class="tag-row mt12"><span class="gtag">Common Phrases</span></div>
+    <p style="font-size:15px;">show mercy · have mercy · at the mercy of · ask for mercy · cry for mercy</p>
+    <div class="cinset mt12" style="font-style:italic;font-size:clamp(14px,1.9vw,17px);border-left:3px solid var(--blood);">"Close your heart to it. Show no mercy."</div>
+  </div>
+  <div class="card mt12">
+    <h3>❓ Fill in:</h3>
+    <div class="blline">The warrior showed no <input class="blinput" id="b_mercy" placeholder="?"> to his enemies.</div>
+    <button class="btn bgold" style="font-size:11px;padding:8px 18px;margin-top:8px;" onclick="chkBlank('b_mercy','mercy','b_mercy_f','<strong>mercy</strong> — compassion for someone you could harm.')">Check ⚔</button>
+    <div class="fb" id="b_mercy_f"></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>I think showing mercy is a sign of ___ because ___.</strong></div>
+    <div class="starter"><strong>Kratos tells Atreus to show no mercy because ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="btn bghost" onclick="goBack()">← Back</button><button class="btn bblood" onclick="goTo(14)">Next Word →</button></div>
+</div>
+
+<!-- S14: SURVIVE -->
+<div class="screen" id="s14">
+  <div class="badge"><span class="bdot"></span>Vocabulary 3 / 5 · Screen 14 of 30</div>
+  <h2>Word: <span class="gc">survive</span></h2>
+  <div class="card cgold mt16">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px;"><span style="font-size:52px;">🔥</span><div><div style="font-family:'Cinzel',serif;font-weight:700;font-size:clamp(24px,4vw,36px);color:var(--gold);">survive</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/səˈvaɪv/ · verb</div></div></div>
+    <div class="divider"></div>
+    <div class="tag-row"><span class="gtag">Meaning</span></div>
+    <p style="font-size:clamp(14px,1.9vw,17px);">To continue living or existing despite danger, hardship, or difficulty. To make it through something difficult.</p>
+    <div class="tag-row mt12"><span class="gtag">Word Family</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+      <div style="background:var(--iron);border-radius:var(--r);padding:10px 12px;font-size:clamp(12px,1.7vw,14px);"><strong style="color:var(--gold);">survive</strong> (verb) — "They survived."</div>
+      <div style="background:var(--iron);border-radius:var(--r);padding:10px 12px;font-size:clamp(12px,1.7vw,14px);"><strong style="color:var(--gold);">survival</strong> (noun) — "It was survival."</div>
+      <div style="background:var(--iron);border-radius:var(--r);padding:10px 12px;font-size:clamp(12px,1.7vw,14px);"><strong style="color:var(--gold);">survivor</strong> (noun) — "He is a survivor."</div>
+      <div style="background:var(--iron);border-radius:var(--r);padding:10px 12px;font-size:clamp(12px,1.7vw,14px);"><strong style="color:var(--gold);">survival of the fittest</strong> — expression</div>
+    </div>
+    <div class="cinset" style="font-style:italic;font-size:clamp(14px,1.9vw,17px);border-left:3px solid var(--blood);">"We hunt to survive. Nothing more." — Kratos</div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>"We hunt to survive." What does this say about Kratos? I think it means ___.</strong></div>
+    <div class="starter"><strong>In real life, I once had to "survive" a difficult situation — it was when ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="btn bghost" onclick="goBack()">← Back</button><button class="btn bblood" onclick="goTo(15)">Next Word →</button></div>
+</div>
+
+<!-- S15: WORTHY -->
+<div class="screen" id="s15">
+  <div class="badge"><span class="bdot"></span>Vocabulary 4 / 5 · Screen 15 of 30</div>
+  <h2>Word: <span class="gc">worthy</span></h2>
+  <div class="card cgold mt16">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px;"><span style="font-size:52px;">⚔</span><div><div style="font-family:'Cinzel',serif;font-weight:700;font-size:clamp(24px,4vw,36px);color:var(--gold);">worthy</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/ˈwɜː.ði/ · adjective</div></div></div>
+    <div class="divider"></div>
+    <div class="tag-row"><span class="gtag">Meaning</span></div>
+    <p style="font-size:clamp(14px,1.9vw,17px);">Having the qualities needed to deserve something — deserving respect, a title, or a position.</p>
+    <div class="tag-row mt12"><span class="gtag">Pattern</span></div>
+    <p style="font-size:15px;">worthy <strong>of</strong> + noun &nbsp;|&nbsp; worthy <strong>to</strong> + verb &nbsp;|&nbsp; <strong>un</strong>worthy (opposite)</p>
+    <div class="tag-row mt12"><span class="gtag">Synonym</span></div><p style="font-size:15px;">deserving · qualified · meritorious · fit for</p>
+  </div>
+  <div class="card mt12">
+    <h3>❓ Which is correct?</h3>
+    <div class="mcq" id="vq15">
+      <div class="mop" onclick="chkMCQ(this,'vq15','A','C','vq15-fb')"><span class="oky">A</span>"He is worthy the challenge."</div>
+      <div class="mop" onclick="chkMCQ(this,'vq15','B','C','vq15-fb')"><span class="oky">B</span>"He is worthy being called a warrior."</div>
+      <div class="mop" onclick="chkMCQ(this,'vq15','C','C','vq15-fb')"><span class="oky">C</span>"He is worthy of being called a warrior." ⚔</div>
+    </div>
+    <div class="fb" id="vq15-fb"></div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now</div>
+    <div class="starter"><strong>I think Atreus is / isn't worthy of his father's respect yet because ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="btn bghost" onclick="goBack()">← Back</button><button class="btn bblood" onclick="goTo(16)">Last Word →</button></div>
+</div>
+
+<!-- S16: CYCLE -->
+<div class="screen" id="s16">
+  <div class="badge"><span class="bdot"></span>Vocabulary 5 / 5 · Screen 16 of 30</div>
+  <h2>Word: <span class="gc">cycle</span></h2>
+  <div class="card cgold mt16">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px;"><span style="font-size:52px;">🔄</span><div><div style="font-family:'Cinzel',serif;font-weight:700;font-size:clamp(24px,4vw,36px);color:var(--gold);">cycle</div><div style="font-size:14px;color:var(--gr);font-style:italic;">/ˈsaɪ.kəl/ · noun</div></div></div>
+    <div class="divider"></div>
+    <div class="tag-row"><span class="gtag">Meaning</span></div>
+    <p style="font-size:clamp(14px,1.9vw,17px);">A series of events that repeat in the same order — especially a pattern that is hard to break.</p>
+    <div class="tag-row mt12"><span class="gtag">In the Trailer — Powerful Line</span></div>
+    <div style="background:var(--ember-dark);border:1px solid var(--blood-md);border-radius:var(--rm);padding:18px 22px;margin-top:8px;">
+      <p style="font-family:'Cinzel',serif;font-size:clamp(17px,2.5vw,24px);font-weight:700;color:var(--wh);line-height:1.5;margin-bottom:8px;">"The cycle ends here.<br>We must be better than this."</p>
+      <p style="font-size:12px;color:var(--gr);font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;">— KRATOS, God of War</p>
+    </div>
+  </div>
+  <div class="spk mt12">
+    <div class="spk-hd">Speak Now — Deep Thinking</div>
+    <div class="starter"><strong>I think "the cycle" Kratos wants to break is ___.</strong></div>
+    <div class="starter"><strong>In real life, breaking a cycle is difficult because ___.</strong></div>
+  </div>
+  <div class="nav-row"><button class="btn bghost" onclick="goBack()">← Back</button><button class="btn bblood" onclick="goTo(17)">Vocabulary Review →</button></div>
+</div>
+
+<!-- ════════════ S17 · VOCAB REVIEW — MATCHING ════════════ -->
+<div class="screen" id="s17">
+  <div class="badge"><span class="bdot"></span>Vocabulary Review · Screen 17 of 30</div>
+  <h2>Match the Words</h2>
+  <p class="mt8">Tap a word on the left, then tap its correct meaning on the right. Match all 5.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;" id="match-wrap">
+    <div>
+      <p class="muted" style="text-align:center;margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.12em;font-size:10px;text-transform:uppercase;">Word</p>
+      <div class="mitem" id="ml0" onclick="matchClick('l',0)">👁 witness</div>
+      <div class="mitem" id="ml1" onclick="matchClick('l',1)">🙏 mercy</div>
+      <div class="mitem" id="ml2" onclick="matchClick('l',2)">🔥 survive</div>
+      <div class="mitem" id="ml3" onclick="matchClick('l',3)">⚔ worthy</div>
+      <div class="mitem" id="ml4" onclick="matchClick('l',4)">🔄 cycle</div>
+    </div>
+    <div>
+      <p class="muted" style="text-align:center;margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.12em;font-size:10px;text-transform:uppercase;">Meaning</p>
+      <div class="mitem" id="mr0" onclick="matchClick('r',0)">Continue living through danger</div>
+      <div class="mitem" id="mr1" onclick="matchClick('r',1)">To observe something important</div>
+      <div class="mitem" id="mr2" onclick="matchClick('r',2)">A repeated pattern, hard to break</div>
+      <div class="mitem" id="mr3" onclick="matchClick('r',3)">Deserving respect or a title</div>
+      <div class="mitem" id="mr4" onclick="matchClick('r',4)">Compassion shown to someone you could harm</div>
+    </div>
+  </div>
+  <div class="fb" id="match-fb"></div>
+  <div class="skip-wrap"><button class="skip-btn" onclick="showEls(['match-spk','match-nav'])">Skip exercise</button></div>
+  <div class="spk mt12" id="match-spk" style="display:none;">
+    <div class="spk-hd">Speak Now — Use All 5</div>
+    <div class="starter"><strong>Use all 5 words in sentences about God of War or your own life!</strong></div>
+  </div>
+  <div class="nav-row" id="match-nav" style="display:none;">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(18)">Transcript →</button>
+  </div>
+</div>
+
+<!-- ════════════ S18 · TRANSCRIPT PART 1 ════════════ -->
+<div class="screen" id="s18">
+  <div class="badge"><span class="bdot"></span>Transcript Part 1 · Screen 18 of 30</div>
+  <h2>Key Lines from the Trailer</h2>
+  <p class="muted mt8" style="margin-bottom:16px;">Tap the <span style="color:var(--ice);border-bottom:1px dotted var(--ice);">blue words</span> to see grammar explanations.</p>
+
+  <div class="trblk">
+    <span class="trtime">⏱ 0:48</span>
+    <span class="who">KRATOS:</span> "<span class="gw" onclick="showG('g1')">Do not</span> be sorry. <span class="gw" onclick="showG('g2')">Be better</span>."
+  </div>
+  <div class="gtip" id="g1"><strong>Do not + base verb</strong> = Negative imperative.<br>This is how we give a direct command NOT to do something.<br>Informal: <em>Don't be sorry.</em> &nbsp; Formal: <em>Do not be sorry.</em><br>Kratos uses the formal version — it sounds more serious, authoritative.</div>
+  <div class="gtip" id="g2"><strong>Be + adjective</strong> = Affirmative imperative with the verb 'to be'.<br>Hidden subject: <em>You</em> be better → <strong>Be better.</strong><br>In imperatives, the subject 'you' is always implied but never said.<br>This line is one of the most famous in God of War.</div>
+
+  <div class="trblk mt12">
+    <span class="trtime">⏱ 1:05</span>
+    <span class="who">KRATOS:</span> "<span class="gw" onclick="showG('g3')">Close</span> your heart to it. <span class="gw" onclick="showG('g4')">Show</span> no mercy."
+  </div>
+  <div class="gtip" id="g3"><strong>Close (your heart)</strong> = Affirmative imperative — base verb directly, no subject.<br>You close your heart → <strong>Close your heart.</strong><br>Kratos is ordering Atreus to detach emotionally — a very harsh command.</div>
+  <div class="gtip" id="g4"><strong>Show (no mercy)</strong> = Another imperative. Notice how ALL of Kratos's commands are short, direct, and brutal. No "please" — only orders. This reveals his character.</div>
+
+  <div class="trblk mt12">
+    <span class="trtime">⏱ 2:10</span>
+    <span class="who">KRATOS:</span> "<span class="gw" onclick="showG('g5')">Remember</span> this feeling. <span class="gw" onclick="showG('g6')">Do not</span> let it go."
+  </div>
+  <div class="gtip" id="g5"><strong>Remember</strong> = A softer imperative — Kratos is asking Atreus to feel and internalise a moment. Not a command to fight, but to remember. A rare emotional depth from him.</div>
+  <div class="gtip" id="g6"><strong>Do not + base verb</strong> = Negative imperative again. Full form sounds more formal and powerful than "don't". Perfect for Kratos's character — always heavy, always commanding.</div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(19)">Transcript Part 2 →</button>
+  </div>
+</div>
+
+<!-- ════════════ S19 · TRANSCRIPT PART 2 ════════════ -->
+<div class="screen" id="s19">
+  <div class="badge"><span class="bdot"></span>Transcript Part 2 · Screen 19 of 30</div>
+  <h2>More Key Lines</h2>
+
+  <div class="trblk">
+    <span class="trtime">⏱ 2:28</span>
+    <span class="who">KRATOS:</span> "The cycle ends here. We must <span class="gw" onclick="showG('g7')">be better</span> than this."
+  </div>
+  <div class="gtip" id="g7"><strong>be better</strong> here is NOT a simple imperative — it follows "must", making it a modal construction: <em>must be</em>.<br>Compare: "Be better!" (imperative — direct command) vs "We must be better." (obligation/necessity). Small word change = big meaning shift!</div>
+
+  <div class="trblk mt10">
+    <span class="trtime">⏱ 0:22 — Kratos training Atreus</span>
+    <span class="who">KRATOS:</span> "<span class="gw" onclick="showG('g8')">Focus.</span> <span class="gw" onclick="showG('g9')">Breathe.</span> <span class="gw" onclick="showG('g10')">Draw.</span>"
+  </div>
+  <div class="gtip" id="g8"><strong>Focus.</strong> — One-word imperative. In English, a single verb can be a complete command. Very common in action/military contexts: Focus. Stop. Listen. Run.</div>
+  <div class="gtip" id="g9"><strong>Breathe.</strong> — Another one-word imperative. Notice Kratos gives instructions in short bursts — this creates urgency and tension in the scene.</div>
+  <div class="gtip" id="g10"><strong>Draw.</strong> — Imperative meaning "draw your bow" / "pull back the arrow." In context, this is a hunting instruction. Short. Powerful. No wasted words.</div>
+
+  <div class="card mt16">
+    <h3>💬 After reading — speak:</h3>
+    <p style="font-size:clamp(14px,1.9vw,17px);line-height:1.85;">How would you describe Kratos as a father based on these lines? Use 3 adjectives and explain each one.</p>
+    <div class="spk mt12">
+      <div class="spk-hd">Speak — Tone Analysis</div>
+      <div class="starter"><strong>Kratos is ___, ___ and ___ because he ___.</strong></div>
+      <div class="starter"><strong>When he says "Be better", I think he feels ___ inside because ___.</strong></div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(20)">Grammar Discovery →</button>
+  </div>
+</div>
+
+<!-- ════════════ S20 · GRAMMAR DISCOVERY ════════════ -->
+<div class="screen" id="s20">
+  <div class="badge"><span class="bdot"></span>Grammar Discovery · Screen 20 of 30</div>
+  <h2>What Do You Notice?</h2>
+  <p class="mt8">Look at these lines. <strong>Before reading any rule</strong> — what do they all have in common?</p>
+
+  <div class="card cdark mt16" style="border-left:3px solid var(--blood);">
+    <p style="font-size:clamp(17px,2.5vw,23px);line-height:2.5;font-family:'Cinzel',serif;font-weight:600;color:var(--wh);">
+      "<span style="color:var(--blood);">Be</span> better."<br>
+      "<span style="color:var(--blood);">Close</span> your heart."<br>
+      "<span style="color:var(--blood);">Show</span> no mercy."<br>
+      "<span style="color:var(--blood);">Remember</span> this feeling."<br>
+      "<span style="color:var(--blood);">Do not</span> be sorry."
+    </p>
+  </div>
+
+  <div class="card mt12">
+    <h3>❓ What is the same in all these sentences?</h3>
+    <div class="mcq" id="disc">
+      <div class="mop" onclick="chkMCQ(this,'disc','A','C','disc-fb')"><span class="oky">A</span>They are all questions.</div>
+      <div class="mop" onclick="chkMCQ(this,'disc','B','C','disc-fb')"><span class="oky">B</span>They all use the past tense.</div>
+      <div class="mop" onclick="chkMCQ(this,'disc','C','C','disc-fb')"><span class="oky">C</span>They are all direct commands — the subject "you" is hidden. ⚔</div>
+    </div>
+    <div class="fb" id="disc-fb"></div>
+  </div>
+
+  <div class="spk mt12" id="disc-spk" style="display:none;">
+    <div class="spk-hd">Speak — Explain It First</div>
+    <p>Before your teacher confirms the rule — try to explain it in your own words. Why is "you" never said?</p>
+    <div class="starter"><strong>I think the rule is: when we give a direct command, we ___.</strong></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="showEls(['disc-spk','disc-nav'])">Skip exercise</button></div>
+  <div class="nav-row" id="disc-nav" style="display:none;">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(21)">See the Full Rule →</button>
+  </div>
+</div>
+
+<!-- ════════════ S21 · GRAMMAR RULE ════════════ -->
+<div class="screen" id="s21">
+  <div class="badge"><span class="bdot"></span>Grammar Rule · Screen 21 of 30</div>
+  <h2>The Imperative — Direct Commands</h2>
+
+  <div class="card cblood mt16">
+    <table class="gtbl">
+      <tr><th>Type</th><th>Structure</th><th>God of War Example</th></tr>
+      <tr><td>✅ Affirmative</td><td><span class="gh">Base verb</span> + rest</td><td><em>Be better. Close your heart. Show mercy.</em></td></tr>
+      <tr><td>❌ Negative</td><td><span class="gh">Do not / Don't</span> + base verb</td><td><em>Do not be sorry. Don't give up.</em></td></tr>
+      <tr><td>⚔ With "be"</td><td><span class="gh">Be</span> + adjective/noun</td><td><em>Be ready. Be worthy. Be better.</em></td></tr>
+      <tr><td>⚡ One word</td><td><span class="gh">Single verb</span></td><td><em>Focus. Breathe. Draw.</em></td></tr>
+    </table>
+  </div>
+
+  <div class="card mt12">
+    <h3>When do we use imperatives?</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px;">
+      <div style="background:var(--iron);border-radius:var(--rm);padding:14px 16px;border:1px solid var(--bdr);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.14em;color:var(--blood);text-transform:uppercase;margin-bottom:8px;">Commands</div>
+        <p style="font-size:clamp(13px,1.7vw,15px);font-style:italic;">"Stop. Look at me."</p>
+      </div>
+      <div style="background:var(--iron);border-radius:var(--rm);padding:14px 16px;border:1px solid var(--bdr);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.14em;color:var(--blood);text-transform:uppercase;margin-bottom:8px;">Advice</div>
+        <p style="font-size:clamp(13px,1.7vw,15px);font-style:italic;">"Be patient. Trust the process."</p>
+      </div>
+      <div style="background:var(--iron);border-radius:var(--rm);padding:14px 16px;border:1px solid var(--bdr);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.14em;color:var(--blood);text-transform:uppercase;margin-bottom:8px;">Warnings</div>
+        <p style="font-size:clamp(13px,1.7vw,15px);font-style:italic;">"Do not enter this realm."</p>
+      </div>
+      <div style="background:var(--iron);border-radius:var(--rm);padding:14px 16px;border:1px solid var(--bdr);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.14em;color:var(--blood);text-transform:uppercase;margin-bottom:8px;">Instructions</div>
+        <p style="font-size:clamp(13px,1.7vw,15px);font-style:italic;">"Turn left. Follow the path."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="spk mt12">
+    <div class="spk-hd">60 Second Challenge</div>
+    <p>You are Kratos. Give your student 6 commands using imperatives. Make them dramatic!</p>
+    <div class="starter"><strong>Be ___ / Do not ___ / Show ___ / Remember ___ / Focus. Draw. ___</strong></div>
+  </div>
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(22)">Grammar Drills →</button>
+  </div>
+</div>
+
+<!-- ════════════ S22 · DRILL 1 — FILL BLANK ════════════ -->
+<div class="screen" id="s22">
+  <div class="badge"><span class="bdot"></span>Grammar Drill 1 · Screen 22 of 30</div>
+  <h2>Build the Imperative</h2>
+  <p class="mt8">Complete each command with the correct form. Remember: base verb only!</p>
+
+  <div class="card mt16">
+    <div style="margin-bottom:18px;">
+      <p class="muted" style="margin-bottom:6px;font-size:12px;">Affirmative imperative — base verb</p>
+      <div class="blline"><input class="blinput" id="d1a" placeholder="?"> your heart to fear.</div>
+      <button class="btn bgold" style="font-size:11px;padding:8px 16px;margin-top:6px;" onclick="chkBlank('d1a','close','d1af','<strong>Close</strong> your heart. ✓ Affirmative imperative = base verb directly.')">Check ⚔</button>
+      <div class="fb" id="d1af"></div>
+    </div>
+    <div class="divider"></div>
+    <div style="margin:14px 0 18px;">
+      <p class="muted" style="margin-bottom:6px;font-size:12px;">Negative imperative — do not + base verb</p>
+      <div class="blline">Do not <input class="blinput" id="d1b" placeholder="?"> your weapon.</div>
+      <button class="btn bgold" style="font-size:11px;padding:8px 16px;margin-top:6px;" onclick="chkBlank('d1b','drop','d1bf','Do not <strong>drop</strong> your weapon. ✓ Negative imperative = Do not + base verb.')">Check ⚔</button>
+      <div class="fb" id="d1bf"></div>
+    </div>
+    <div class="divider"></div>
+    <div style="margin-bottom:18px;margin-top:14px;">
+      <p class="muted" style="margin-bottom:6px;font-size:12px;">Be + adjective</p>
+      <div class="blline"><input class="blinput" id="d1c" placeholder="?"> worthy of this realm.</div>
+      <button class="btn bgold" style="font-size:11px;padding:8px 16px;margin-top:6px;" onclick="chkBlank('d1c','be','d1cf','<strong>Be</strong> worthy of this realm. ✓ Imperative with be = Be + adjective.')">Check ⚔</button>
+      <div class="fb" id="d1cf"></div>
+    </div>
+    <div class="divider"></div>
+    <div style="margin-top:14px;">
+      <p class="muted" style="margin-bottom:6px;font-size:12px;">Don't = informal negative imperative</p>
+      <div class="blline">Don't <input class="blinput" id="d1d" placeholder="?"> hope, Atreus.</div>
+      <button class="btn bgold" style="font-size:11px;padding:8px 16px;margin-top:6px;" onclick="chkBlank('d1d','lose','d1df','Don\'t <strong>lose</strong> hope. ✓ Don\'t + base verb = informal negative imperative.')">Check ⚔</button>
+      <div class="fb" id="d1df"></div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(23)">Drill 2 →</button>
+  </div>
+</div>
+
+<!-- ════════════ S23 · DRILL 2 — ERROR CORRECTION ════════════ -->
+<div class="screen" id="s23">
+  <div class="badge"><span class="bdot"></span>Grammar Drill 2 · Screen 23 of 30</div>
+  <h2>Find the Mistake</h2>
+  <p class="mt8">Each sentence has ONE grammar error. Find it and choose the correct version.</p>
+
+  <div class="card mt16">
+    <p class="muted" style="margin-bottom:9px;font-size:13px;">❌ "You be strong, boy."</p>
+    <div class="mcq" id="ec1">
+      <div class="mop" onclick="chkMCQ(this,'ec1','A','A','ec1-fb')"><span class="oky">A</span>"<strong>Be</strong> strong, boy." ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'ec1','B','A','ec1-fb')"><span class="oky">B</span>"Being strong, boy."</div>
+      <div class="mop" onclick="chkMCQ(this,'ec1','C','A','ec1-fb')"><span class="oky">C</span>"You are being strong, boy."</div>
+    </div>
+    <div class="fb" id="ec1-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <p class="muted" style="margin-bottom:9px;font-size:13px;">❌ "Don't to be sorry."</p>
+    <div class="mcq" id="ec2">
+      <div class="mop" onclick="chkMCQ(this,'ec2','A','C','ec2-fb')"><span class="oky">A</span>"Don't being sorry."</div>
+      <div class="mop" onclick="chkMCQ(this,'ec2','B','C','ec2-fb')"><span class="oky">B</span>"Don't to being sorry."</div>
+      <div class="mop" onclick="chkMCQ(this,'ec2','C','C','ec2-fb')"><span class="oky">C</span>"<strong>Don't be</strong> sorry." ⚔</div>
+    </div>
+    <div class="fb" id="ec2-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <p class="muted" style="margin-bottom:9px;font-size:13px;">❌ "Remembers this day, Atreus."</p>
+    <div class="mcq" id="ec3">
+      <div class="mop" onclick="chkMCQ(this,'ec3','A','B','ec3-fb')"><span class="oky">A</span>"Remembered this day, Atreus."</div>
+      <div class="mop" onclick="chkMCQ(this,'ec3','B','B','ec3-fb')"><span class="oky">B</span>"<strong>Remember</strong> this day, Atreus." ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'ec3','C','B','ec3-fb')"><span class="oky">C</span>"You remembers this day, Atreus."</div>
+    </div>
+    <div class="fb" id="ec3-fb"></div>
+  </div>
+
+  <div class="spk mt12">
+    <div class="spk-hd">Speak — Explain Each Error</div>
+    <div class="starter"><strong>The mistake in sentence 1 is ___ because imperatives ___.</strong></div>
+    <div class="starter"><strong>After "don't", we always use ___ because ___.</strong></div>
+  </div>
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(24)">Drill 3 →</button>
+  </div>
+</div>
+
+<!-- ════════════ S24 · DRILL 3 — MCQ GRAMMAR ════════════ -->
+<div class="screen" id="s24">
+  <div class="badge"><span class="bdot"></span>Grammar Drill 3 · Screen 24 of 30</div>
+  <h2>Choose the Correct Imperative</h2>
+
+  <div class="card mt12">
+    <h3>1. Kratos to Atreus before battle:</h3>
+    <div class="mcq" id="gq1">
+      <div class="mop" onclick="chkMCQ(this,'gq1','A','B','gq1-fb')"><span class="oky">A</span>"You focus on the target."</div>
+      <div class="mop" onclick="chkMCQ(this,'gq1','B','B','gq1-fb')"><span class="oky">B</span>"<strong>Focus</strong> on the target." ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'gq1','C','B','gq1-fb')"><span class="oky">C</span>"Focusing on the target."</div>
+    </div>
+    <div class="fb" id="gq1-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>2. A warning — which is correct?</h3>
+    <div class="mcq" id="gq2">
+      <div class="mop" onclick="chkMCQ(this,'gq2','A','A','gq2-fb')"><span class="oky">A</span>"<strong>Do not</strong> enter the cave." ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'gq2','B','A','gq2-fb')"><span class="oky">B</span>"You do not to enter the cave."</div>
+      <div class="mop" onclick="chkMCQ(this,'gq2','C','A','gq2-fb')"><span class="oky">C</span>"Do not entering the cave."</div>
+    </div>
+    <div class="fb" id="gq2-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>3. Advice from Kratos — which sounds most natural?</h3>
+    <div class="mcq" id="gq3">
+      <div class="mop" onclick="chkMCQ(this,'gq3','A','C','gq3-fb')"><span class="oky">A</span>"You should be patient and controlled."</div>
+      <div class="mop" onclick="chkMCQ(this,'gq3','B','C','gq3-fb')"><span class="oky">B</span>"Being patient and controlled."</div>
+      <div class="mop" onclick="chkMCQ(this,'gq3','C','C','gq3-fb')"><span class="oky">C</span>"<strong>Be</strong> patient. <strong>Be</strong> controlled." ⚔</div>
+    </div>
+    <div class="fb" id="gq3-fb"></div>
+  </div>
+
+  <div class="card mt12">
+    <h3>4. Choose the negative imperative:</h3>
+    <div class="mcq" id="gq4">
+      <div class="mop" onclick="chkMCQ(this,'gq4','A','B','gq4-fb')"><span class="oky">A</span>"Not show them your fear."</div>
+      <div class="mop" onclick="chkMCQ(this,'gq4','B','B','gq4-fb')"><span class="oky">B</span>"<strong>Don't show</strong> them your fear." ⚔</div>
+      <div class="mop" onclick="chkMCQ(this,'gq4','C','B','gq4-fb')"><span class="oky">C</span>"Do not to show them your fear."</div>
+    </div>
+    <div class="fb" id="gq4-fb"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(25)">Conversation →</button>
+  </div>
+</div>
+
+<!-- ════════════ S25 · CONVERSATION — READ ════════════ -->
+<div class="screen" id="s25">
+  <div class="badge"><span class="bdot"></span>Conversation · Screen 25 of 30</div>
+  <h2>A Real Conversation</h2>
+  <p class="mt8">Two students are talking about the trailer. Read the dialogue — notice how the vocabulary and grammar are used naturally.</p>
+
+  <div class="convo mt16">
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">Did you watch the God of War trailer? What did you think?</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">Yes! It was amazing. I was surprised by how emotional it felt. I expected more action, but the <span class="vw" onclick="openCX('witness')">relationship</span> between the father and son really hit me.</div></div>
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">I know. And the way Kratos speaks — he never really shows emotion. He just gives orders. Like: "Do not be sorry. Be better."</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">Exactly — those are all <strong>imperatives</strong>, right? Direct commands with no subject. It fits his personality — he's a warrior. That's the only language he knows.</div></div>
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">What about the line "The cycle ends here"? What do you think the <span class="vw" onclick="openCX('cycle')">cycle</span> is?</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">I think it's the pattern of violence in his past. He was the god of war — he destroyed everything. Now he wants to <span class="vw" onclick="openCX('survive')">survive</span> and live differently, for his son's sake.</div></div>
+    <div class="msg"><div class="mav">🧑</div><div class="mbub">That's really deep for a video game! Do you think he's a <span class="vw" onclick="openCX('worthy')">worthy</span> father?</div></div>
+    <div class="msg r"><div class="mav">👩</div><div class="mbub">In some ways yes — he protects Atreus with everything he has. But he doesn't show <span class="vw" onclick="openCX('mercy')">mercy</span> or kindness. That's the tragic part. He doesn't know how to love without being cold.</div></div>
+  </div>
+
+  <div class="spk mt16">
+    <div class="spk-hd">Read Aloud — Role Play</div>
+    <p>Read the conversation with your teacher. Then swap roles. After reading, discuss: do you agree with the second student's view of Kratos?</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(26)">Conversation Practice →</button>
+  </div>
+</div>
+
+<!-- ════════════ S26 · CONVERSATION PRACTICE ════════════ -->
+<div class="screen" id="s26">
+  <div class="badge"><span class="bdot"></span>Conversation Practice · Screen 26 of 30</div>
+  <h2>Your Turn to Speak</h2>
+  <p class="mt8">Now practise the conversation — but this time make it personal. Answer with YOUR real opinion.</p>
+
+  <div class="card mt16">
+    <h3>Answer these questions in full sentences — speak to your teacher:</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+      <div style="background:var(--iron);border-radius:var(--r);padding:14px 18px;font-size:clamp(14px,1.9vw,17px);"><span style="color:var(--blood);font-family:'Cinzel',serif;font-weight:700;">1.</span> What is the most powerful thing you heard or saw in the trailer? Why?</div>
+      <div style="background:var(--iron);border-radius:var(--r);padding:14px 18px;font-size:clamp(14px,1.9vw,17px);"><span style="color:var(--blood);font-family:'Cinzel',serif;font-weight:700;">2.</span> Do you think Kratos is a good father? Use evidence from the trailer.</div>
+      <div style="background:var(--iron);border-radius:var(--r);padding:14px 18px;font-size:clamp(14px,1.9vw,17px);"><span style="color:var(--blood);font-family:'Cinzel',serif;font-weight:700;">3.</span> "Do not be sorry. Be better." — Do you agree with this as life advice? Why / why not?</div>
+      <div style="background:var(--iron);border-radius:var(--r);padding:14px 18px;font-size:clamp(14px,1.9vw,17px);"><span style="color:var(--blood);font-family:'Cinzel',serif;font-weight:700;">4.</span> What is a cycle you have tried to break in your own life?</div>
+    </div>
+  </div>
+
+  <div class="card mt12">
+    <h3>📝 Notes for speaking:</h3>
+    <textarea class="ta" placeholder="Key words and ideas — not full sentences…" rows="3"></textarea>
+  </div>
+
+  <div class="spk mt12">
+    <div class="spk-hd">B1 Speaking Target</div>
+    <p>Use at least: <strong>2 imperative sentences</strong>, <strong>3 vocabulary words</strong>, and connect at least one answer to your own personal experience.</p>
+    <div class="starter"><strong>I think / In my opinion / From what I saw in the trailer…</strong></div>
+    <div class="starter"><strong>This connects to my life because…</strong></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(27)">Decision Scenario →</button>
+  </div>
+</div>
+
+<!-- ════════════ S27 · DECISION SCENARIO ════════════ -->
+<div class="screen" id="s27">
+  <div class="badge"><span class="bdot"></span>Decision Scenario · Screen 27 of 30</div>
+  <h2>You Are Atreus</h2>
+  <p class="mt8 mt16" style="font-size:clamp(15px,2vw,18px);line-height:1.85;">You are Atreus. You just missed an important shot during the hunt. The animal escaped. Kratos looks at you silently. Then he says: <strong style="color:var(--blood);">"Again. This time, do not hesitate."</strong></p>
+  <p class="mt12">How do you respond?</p>
+
+  <div class="dec-grid mt16" id="dec-opts">
+    <div class="dcard" onclick="pickDec(this)">
+      <span class="dcard-icon">🏹</span>
+      <div class="dcard-title">Try again immediately</div>
+      You say nothing. You pick up your bow and prepare. Actions speak louder than words.
+    </div>
+    <div class="dcard" onclick="pickDec(this)">
+      <span class="dcard-icon">🙏</span>
+      <div class="dcard-title">Apologise first</div>
+      "I'm sorry, father. I wasn't focused." You need to acknowledge the mistake before moving on.
+    </div>
+    <div class="dcard" onclick="pickDec(this)">
+      <span class="dcard-icon">❓</span>
+      <div class="dcard-title">Ask for guidance</div>
+      "What am I doing wrong? Help me understand." You want to learn, not just try again blindly.
+    </div>
+    <div class="dcard" onclick="pickDec(this)">
+      <span class="dcard-icon">💭</span>
+      <div class="dcard-title">Push back</div>
+      "I hesitated because I wasn't sure. Tell me why it matters." You need a reason to fight.
+    </div>
+  </div>
+
+  <div class="fb" id="dec-fb"></div>
+  <div class="spk mt12" id="dec-spk" style="display:none;">
+    <div class="spk-hd">Defend Your Decision</div>
+    <p>Tell your teacher WHY you chose that option. Use imperatives and vocabulary in your answer!</p>
+    <div class="starter"><strong>I chose ___ because I believe that ___.</strong></div>
+    <div class="starter"><strong>If I were Atreus, I would ___ because ___. Kratos would probably say: "___ [imperative]."</strong></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="showEls(['dec-fb','dec-spk','dec-nav'])">Skip exercise</button></div>
+  <div class="nav-row" id="dec-nav" style="display:none;">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(28)">Final Speaking Challenge →</button>
+  </div>
+</div>
+
+<!-- ════════════ S28 · SPEAKING ARENA ════════════ -->
+<div class="screen" id="s28">
+  <div class="badge"><span class="bdot"></span>Speaking Arena · Screen 28 of 30</div>
+  <h2>🏆 The Final Challenge</h2>
+
+  <div class="card cblood mt16">
+    <h3 style="font-size:clamp(16px,2.5vw,20px);margin-bottom:12px;">Your Mission:</h3>
+    <p style="font-size:clamp(15px,2vw,18px);line-height:1.85;">Your teacher asks: <em>"What does God of War say about what it means to be a good parent? What lessons can real people take from Kratos's story?"</em><br><br>Speak for at least <strong>90 seconds</strong>. Use vocabulary from today, at least 2 imperatives, and connect the game's themes to real life.</p>
+  </div>
+
+  <div class="card mt12">
+    <div class="tag-row">
+      <span class="tag">witness</span><span class="tag">mercy</span><span class="tag">survive</span><span class="tag">worthy</span><span class="tag">cycle</span>
+      <span class="gtag">Be + adj.</span><span class="gtag">Do not + verb</span>
+    </div>
+    <textarea class="ta" placeholder="Key ideas to structure your speaking…" rows="4"></textarea>
+  </div>
+
+  <div class="card mt12">
+    <h3>Teacher Evaluation</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <div class="dcard" style="flex:1;min-width:140px;" onclick="rateFinal(this,'A')"><div class="dcard-title">⚔⚔⚔ GOD TIER</div>Used imperatives + vocab + analysis naturally — connected to real life</div>
+      <div class="dcard" style="flex:1;min-width:140px;" onclick="rateFinal(this,'B')"><div class="dcard-title">⚔⚔ WARRIOR</div>Good speaking — needed reminders on grammar or vocabulary</div>
+      <div class="dcard" style="flex:1;min-width:140px;" onclick="rateFinal(this,'C')"><div class="dcard-title">⚔ APPRENTICE</div>Needs more speaking practice — grammar and vocab still forming</div>
+    </div>
+    <div class="fb" id="final-fb"></div>
+  </div>
+
+  <div class="skip-wrap"><button class="skip-btn" onclick="showEls(['final-fb','final-nav'])">Skip</button></div>
+  <div class="nav-row" id="final-nav" style="display:none;">
+    <button class="btn bghost" onclick="goBack()">← Back</button>
+    <button class="btn bblood" onclick="goTo(29)">Mission Complete →</button>
+  </div>
+</div>
+
+<!-- ════════════ S29 · MISSION COMPLETE ════════════ -->
+<div class="screen" id="s29">
+  <div style="text-align:center;padding:28px 0 24px;">
+    <div class="cbadge">🪓</div>
+    <div class="cscore">⚔</div>
+    <div class="clbl">Mission Complete · Realm Conquered</div>
+  </div>
+
+  <div class="card cblood" style="text-align:center;padding:28px;">
+    <p style="font-family:'Cinzel',serif;font-size:clamp(18px,3vw,26px);font-weight:700;color:var(--blood);margin-bottom:8px;line-height:1.4;">"The cycle ends here.<br>We must be better than this."</p>
+    <p style="font-size:13px;color:var(--gr);font-family:'Barlow Condensed',sans-serif;letter-spacing:.12em;text-transform:uppercase;">— Kratos, God of War (2018)</p>
+  </div>
+
+  <div class="card cgold mt16">
+    <h3 style="text-align:center;font-size:clamp(16px,2.5vw,20px);margin-bottom:16px;">Skills Unlocked</h3>
+    <table class="gtbl">
+      <tr><th>Skill</th><th>Status</th></tr>
+      <tr><td>Vocabulary: witness, mercy, survive, worthy, cycle</td><td style="color:var(--ok);">✅</td></tr>
+      <tr><td>Imperatives — Affirmative (Be strong. Close your heart.)</td><td style="color:var(--ok);">✅</td></tr>
+      <tr><td>Imperatives — Negative (Do not be sorry. Don't give up.)</td><td style="color:var(--ok);">✅</td></tr>
+      <tr><td>Character & tone analysis from trailer</td><td style="color:var(--ok);">✅</td></tr>
+      <tr><td>Conversation: discuss, argue, connect to real life</td><td style="color:var(--ok);">✅</td></tr>
+      <tr><td>B1 Speaking: extended opinion + personal connection</td><td style="color:var(--ok);">✅</td></tr>
+    </table>
+  </div>
+
+  <div class="card mt12">
+    <h3>📜 Homework Mission</h3>
+    <p style="font-size:clamp(14px,1.9vw,17px);line-height:1.85;">Think of a mentor, parent, coach or important person in YOUR life. Write <strong>5 imperatives</strong> that they would say to you — 3 affirmative and 2 negative. Then write 2 sentences explaining what kind of person they are and why their words are important to you. Bring it to your next class!</p>
+  </div>
+
+  <div class="spk mt12">
+    <div class="spk-hd">Final Reflection — Speak Now</div>
+    <div class="starter"><strong>The most powerful line in the trailer was "___ " because ___.</strong></div>
+    <div class="starter"><strong>The imperative I will remember most is "___ " because ___.</strong></div>
+    <div class="starter"><strong>One thing I want to do better in English is ___.</strong></div>
+  </div>
+
+  <div style="text-align:center;margin-top:32px;padding:20px 0;border-top:1px solid var(--bdr);">
+    <p style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:900;letter-spacing:.3em;color:rgba(255,255,255,.13);text-transform:uppercase;">WolfStation · God of War · B1 · Imperatives · 30 Screens</p>
+  </div>
+</div>
+
+</main>
+
+<script>
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+const TOTAL = 30;
+let cur = 0;
+const realms = {0:'Codex',1:'Midgard',2:'Midgard',3:'Midgard',4:'Midgard',5:'Asgard',6:'Asgard',7:'Asgard',8:'Asgard',9:'Alfheim',10:'Alfheim',11:'Alfheim',12:'Alfheim',13:'Alfheim',14:'Alfheim',15:'Alfheim',16:'Alfheim',17:'Jotunheim',18:'Jotunheim',19:'Jotunheim',20:'Niflheim',21:'Niflheim',22:'Svartalfheim',23:'Svartalfheim',24:'Svartalfheim',25:'Vanaheim',26:'Vanaheim',27:'Helheim',28:'Ragnarök',29:'Ascension'};
+function goTo(n){
+  document.getElementById('s'+cur).classList.remove('on');
+  cur=n;
+  document.getElementById('s'+cur).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  updNav();
+}
+function goBack(){ if(cur>0) goTo(cur-1); }
+function updNav(){
+  const p=Math.round((cur/(TOTAL-1))*100);
+  document.getElementById('xp-bar').style.width=p+'%';
+  document.getElementById('step-txt').textContent=cur+'/'+(TOTAL-1);
+  document.getElementById('realm-txt').textContent=realms[cur]||'Midgard';
+  if(jumpOpen) buildJumpList(document.getElementById('jump-search').value);
+}
+
+/* ════════════════════════════════════════
+   FULLSCREEN
+════════════════════════════════════════ */
+function toggleFS(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen().catch(()=>{});
+}
+
+/* ════════════════════════════════════════
+   WAR ROOM
+════════════════════════════════════════ */
+let wrOpen=false;
+const wbPH={
+  notes:'Write notes for your student here…\n\nThe student sees this in real time!',
+  vocab:'⚔ VOCABULARY TODAY:\n\n• witness = to observe something important\n• mercy = compassion for someone you could harm\n• survive = to continue living through danger\n• worthy = deserving respect or a title\n• cycle = a repeated pattern, hard to break',
+  errors:'❌ ERRORS TO CORRECT:\n\n',
+  hw:'📜 HOMEWORK MISSION:\n\nWrite 5 imperatives from an important person in your life — 3 affirmative, 2 negative. Explain who they are in 2 sentences.'
+};
+function toggleWR(){
+  wrOpen=!wrOpen;
+  document.getElementById('warroom').classList.toggle('open',wrOpen);
+  document.getElementById('nav-wr').classList.toggle('on',wrOpen);
+}
+function wbTab(t){
+  document.querySelectorAll('.wtab').forEach(w=>w.classList.remove('on'));
+  document.getElementById('wt-'+t).classList.add('on');
+  document.getElementById('wb-ta').placeholder=wbPH[t];
+}
+function wbClear(){ if(confirm('Clear the War Room?')) document.getElementById('wb-ta').value=''; }
+function wbSave(){
+  localStorage.setItem('ws_gow_wb',document.getElementById('wb-ta').value);
+  const s=document.getElementById('wr-saved');s.style.display='block';setTimeout(()=>s.style.display='none',2000);
+}
+function wbCopy(){ navigator.clipboard.writeText(document.getElementById('wb-ta').value).catch(()=>{}); }
+(()=>{ const s=localStorage.getItem('ws_gow_wb'); if(s) document.getElementById('wb-ta').value=s; })();
+
+/* ════════════════════════════════════════
+   JUMP PANEL
+════════════════════════════════════════ */
+const jumpScreens=[
+  {n:0,name:'Teacher Guide',tag:'Setup'},
+  {n:1,name:'Cover',tag:'Intro'},
+  {n:2,name:'Warm-Up 1 — Life Questions',tag:'Warm-Up'},
+  {n:3,name:'Warm-Up 2 — More Questions',tag:'Warm-Up'},
+  {n:4,name:'Warm-Up Speaking',tag:'Warm-Up'},
+  {n:5,name:'Game Synopsis',tag:'About the Game'},
+  {n:6,name:'Platforms & Details',tag:'About the Game'},
+  {n:7,name:'Pre-Watch Prediction',tag:'Pre-Watch'},
+  {n:8,name:'Watch the Trailer',tag:'Video'},
+  {n:9,name:'Post-Video Q1',tag:'Comprehension'},
+  {n:10,name:'Post-Video Q2 — Go Deeper',tag:'Comprehension'},
+  {n:11,name:'Post-Video Discussion',tag:'Comprehension'},
+  {n:12,name:'Vocabulary 1 — witness',tag:'Vocabulary'},
+  {n:13,name:'Vocabulary 2 — mercy',tag:'Vocabulary'},
+  {n:14,name:'Vocabulary 3 — survive',tag:'Vocabulary'},
+  {n:15,name:'Vocabulary 4 — worthy',tag:'Vocabulary'},
+  {n:16,name:'Vocabulary 5 — cycle',tag:'Vocabulary'},
+  {n:17,name:'Vocabulary Review — Matching',tag:'Review'},
+  {n:18,name:'Transcript Part 1',tag:'Transcript'},
+  {n:19,name:'Transcript Part 2',tag:'Transcript'},
+  {n:20,name:'Grammar Discovery',tag:'Grammar'},
+  {n:21,name:'Grammar Rule — Imperatives',tag:'Grammar'},
+  {n:22,name:'Grammar Drill 1 — Fill Blank',tag:'Drills'},
+  {n:23,name:'Grammar Drill 2 — Error Correction',tag:'Drills'},
+  {n:24,name:'Grammar Drill 3 — MCQ',tag:'Drills'},
+  {n:25,name:'Conversation — Read',tag:'Conversation'},
+  {n:26,name:'Conversation — Practice',tag:'Conversation'},
+  {n:27,name:'Decision Scenario',tag:'Speaking'},
+  {n:28,name:'Speaking Arena — Final Challenge',tag:'Speaking'},
+  {n:29,name:'Mission Complete',tag:'End'},
+];
+let jumpOpen=false;
+function buildJumpList(filter=''){
+  const list=document.getElementById('jump-list');
+  const term=filter.toLowerCase();
+  let html='',lastTag='';
+  jumpScreens.forEach(s=>{
+    if(term&&!s.name.toLowerCase().includes(term)&&!s.tag.toLowerCase().includes(term))return;
+    if(s.tag!==lastTag){html+=`<div class="jsec">${s.tag}</div>`;lastTag=s.tag;}
+    const act=s.n===cur?'cur':'';
+    html+=`<div class="jitem ${act}" onclick="jumpTo(${s.n})"><div class="jnum">${s.n}</div><div class="jname">${s.name}</div></div>`;
+  });
+  if(!html)html='<div style="padding:16px;font-size:14px;color:var(--gr);text-align:center;">No results</div>';
+  list.innerHTML=html;
+}
+function jumpTo(n){
+  goTo(n);
+  ['match-nav','match-spk','disc-nav','disc-spk','dec-nav','dec-spk','final-nav','pred-nav','pred-spk','emo-nav','emo-spk'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=el.classList.contains('nav-row')?'flex':'block';
+  });
+  toggleJump();
+}
+function toggleJump(){
+  jumpOpen=!jumpOpen;
+  document.getElementById('jump-panel').classList.toggle('open',jumpOpen);
+  document.getElementById('nav-jump').classList.toggle('on',jumpOpen);
+  if(jumpOpen){buildJumpList();setTimeout(()=>document.getElementById('jump-search').focus(),200);}
+}
+function filterJump(v){buildJumpList(v);}
+document.addEventListener('click',e=>{
+  if(!jumpOpen)return;
+  const p=document.getElementById('jump-panel'),b=document.getElementById('nav-jump');
+  if(!p.contains(e.target)&&!b.contains(e.target))toggleJump();
+});
+
+/* ════════════════════════════════════════
+   CODEX SIDEBAR (VOCAB)
+════════════════════════════════════════ */
+const cxData={
+  witness:{emoji:'👁',word:'witness',pron:'/ˈwɪt.nəs/',mean:'To see or observe something important happen. As a noun: a person who saw an event.',syn:'observe · see · behold · watch',ex:'"The boy witnessed his father\'s power for the first time — and it changed him forever."',vid:'"The gods of this world have witnessed your failures."',q:'Have you ever witnessed something that changed how you see the world? Tell me about it.',s1:'I once witnessed ___. It made me feel ___.',s2:''},
+  mercy:{emoji:'🙏',word:'mercy',pron:'/ˈmɜː.si/',mean:'Compassion or forgiveness shown to someone you have power over — choosing not to harm them.',syn:'compassion · forgiveness · clemency · pity',ex:'"He showed no mercy to his enemies in battle."',vid:'"Close your heart to it. Show no mercy."',q:'Is mercy a sign of strength or weakness? What would Kratos say?',s1:'I think showing mercy is a sign of ___ because ___.',s2:''},
+  survive:{emoji:'🔥',word:'survive',pron:'/səˈvaɪv/',mean:'To continue living or existing despite danger, hardship or difficulty.',syn:'endure · persist · make it through',ex:'"Against all odds, they survived the winter in the Norse mountains."',vid:'"We hunt to survive. Nothing more." — Kratos',q:'Have you ever had to "survive" a difficult situation? How did you do it?',s1:'I once had to survive ___. I got through it by ___.',s2:''},
+  worthy:{emoji:'⚔',word:'worthy',pron:'/ˈwɜː.ði/',mean:'Having the qualities needed to deserve something — deserving respect, a title, or a position.',syn:'deserving · qualified · fit for · meritorious',ex:'"Only those worthy of the gods\' blessing could enter the realm."',vid:'"Are you worthy of carrying this name?"',q:'Do you think Atreus is worthy of his father\'s respect at the start of the trailer? Why?',s1:'I think Atreus is / isn\'t worthy because ___.',s2:''},
+  cycle:{emoji:'🔄',word:'cycle',pron:'/ˈsaɪ.kəl/',mean:'A series of events that repeat in the same order — especially a pattern that is difficult to break.',syn:'pattern · repetition · loop',ex:'"The cycle of poverty is hard to break without education and opportunity."',vid:'"The cycle ends here. We must be better than this." — Kratos',q:'What cycle do you think Kratos wants to break? Have you ever tried to break a cycle in your own life?',s1:'I think the cycle Kratos wants to break is ___.',s2:'In my life, I once tried to break the cycle of ___.'},
+};
+function openCX(key){
+  const d=cxData[key]; if(!d) return;
+  document.getElementById('cx-emoji').textContent=d.emoji;
+  document.getElementById('cx-word').textContent=d.word;
+  document.getElementById('cx-pron').textContent=d.pron;
+  document.getElementById('cx-mean').textContent=d.mean;
+  document.getElementById('cx-syn').textContent=d.syn;
+  document.getElementById('cx-ex').textContent=d.ex;
+  document.getElementById('cx-vid').textContent=d.vid;
+  document.getElementById('cx-q').textContent=d.q;
+  document.getElementById('cx-s1').textContent=d.s1;
+  const s2=document.getElementById('cx-s2');
+  if(d.s2){s2.textContent=d.s2;s2.style.display='block';}else{s2.style.display='none';}
+  document.getElementById('codex').classList.add('open');
+  document.getElementById('veil').classList.add('on');
+}
+function closeCX(){
+  document.getElementById('codex').classList.remove('open');
+  document.getElementById('veil').classList.remove('on');
+}
+
+/* ════════════════════════════════════════
+   GRAMMAR TIPS
+════════════════════════════════════════ */
+function showG(id){
+  const el=document.getElementById(id);
+  const was=el.classList.contains('show');
+  document.querySelectorAll('.gtip').forEach(t=>t.classList.remove('show'));
+  if(!was)el.classList.add('show');
+}
+
+/* ════════════════════════════════════════
+   WARM-UP PICKS (info-only, always shows speak)
+════════════════════════════════════════ */
+const wuMsg={
+  wu1:{A:"A family member — the most powerful teacher in many cultures. This connects to Kratos and Atreus's story!",B:"A teacher or coach — someone who pushes us to be better. Sound familiar?",C:"A friend — sometimes the people closest to us teach us the most.",D:"Self-taught — independent learning is powerful. Kratos would respect that."},
+  wu2:{A:"Feeling guilty is human — but Kratos would say this is a waste of energy: 'Be better, not sorry.'",B:"This is exactly Kratos's philosophy! Learn and improve — move forward.",C:"Sometimes moving on quickly is what survival requires. Kratos would understand.",D:"Context matters — a very mature answer. B1 level thinking!"},
+  wu3:{A:"Never giving up — pure survival mentality. Very Kratos.",B:"Analyse first, then act — strategic thinking. Atreus tends to rush, Kratos plans.",C:"Asking for help — important self-awareness. This is hard for Kratos!",D:"Frustration then perseverance — very human and relatable."},
+  wu4:{A:"Optimistic! This is the philosophy Kratos tries to teach Atreus.",B:"Realistic — change takes time. This mirrors the game's story arc.",C:"Nuanced B1 thinking — well done! This is the honest answer.",D:"Cynical but sometimes true — Kratos himself struggles with this."},
+  wu5:{A:"Both have value — but notice Kratos cuts out the apology completely. He sees emotion as weakness.",B:"Kratos's exact philosophy. Is he right, or is he missing something important?",C:"The most complete answer! Both matter — and this is what Atreus learns over time."}
+};
+function wuPick(el,group,choice,fbId){
+  const opts=document.getElementById(group).querySelectorAll('.mop');
+  if(el.classList.contains('lk'))return;
+  opts.forEach(o=>o.classList.add('lk'));
+  el.classList.add('ok');
+  const fb=document.getElementById(fbId);
+  fb.className='fb gold show';
+  fb.innerHTML='⚔ '+wuMsg[group][choice];
+}
+
+/* ════════════════════════════════════════
+   MCQ
+════════════════════════════════════════ */
+const mcqFB={
+  pv1:{ok:'✅ Correct! The 2018 God of War moved from Ancient Greece to Norse mythology — the dark, cold forests of Scandinavia.',bad:'❌ Not quite. Look at the setting — the trees, the cold, the Norse runes. It\'s the Viking world.'},
+  pv2:{ok:'⚔ Exactly! "Do not be sorry. Be better." — one of gaming\'s most famous lines. A perfect imperative!',bad:'❌ Re-watch that moment. After Atreus fails, Kratos gives him a very direct command in two short sentences.'},
+  pv3:{ok:'✅ Right! Atreus clearly wants to prove himself and is afraid of failing his father. That emotional tension is the heart of the story.',bad:'❌ Look at Atreus\'s body language and expression. He seems nervous and eager — not relaxed or confident.'},
+  pv4:{ok:'⚔ Exactly! The cycle of violence — Kratos has spent his life destroying. He wants to break that pattern for his son\'s sake.',bad:'❌ Think deeper. Kratos has lived a life of rage and war. "The cycle" refers to the pattern of destruction he has always followed.'},
+  vq12:{ok:'✅ Perfect! Witness = to observe something powerful or important. The battle context is exactly right.',bad:'❌ We witness important, powerful events — not everyday things like homework or food.'},
+  vq15:{ok:'✅ Correct! worthy + OF + noun/gerund. He is worthy OF being called a warrior.',bad:'❌ The preposition matters! worthy <strong>of</strong> + noun. Not "worthy the" or "worthy being".'},
+  disc:{ok:'⚔ You found it! These are imperatives — direct commands where the subject "you" is always implied but never spoken.',bad:'❌ Look again. No question marks, no past tense, no "was/were". These are commands — the grammar we call imperatives.'},
+  ec1:{ok:'✅ Correct! Imperatives never need "you" as the subject. Just: <strong>Be</strong> strong.',bad:'❌ The error is "you". Drop the subject in imperatives. Just: Be strong.'},
+  ec2:{ok:'✅ Perfect! Don\'t + base verb. <strong>Don\'t be</strong> sorry. Never "don\'t to be".',bad:'❌ After "don\'t", use the BASE verb directly — never add "to". Don\'t <strong>be</strong> sorry.'},
+  ec3:{ok:'✅ Right! Imperatives use the BASE verb — never add -s or past tense. <strong>Remember</strong>, not "remembers".',bad:'❌ Imperatives always use the base verb — no -s, no past tense. <strong>Remember</strong> this day.'},
+  gq1:{ok:'✅ Correct! One-word imperative — "Focus." No subject, no extra words. Direct and powerful.',bad:'❌ Not this one. "You focus" is not an imperative — it\'s a statement. Drop the subject for a command.'},
+  gq2:{ok:'⚔ Perfect! Do not + base verb — the standard negative imperative form.',bad:'❌ "Do not to enter" has an extra "to" that doesn\'t belong. "Do not entering" uses -ing instead of base verb. The rule is: Do not + BASE verb.'},
+  gq3:{ok:'✅ Exactly! Short, sharp imperatives are the most natural command form. "Be patient. Be controlled." — very Kratos!',bad:'❌ "You should" is advice, not an imperative. "Being" starts a participle, not a command. Imperatives start with a base verb.'},
+  gq4:{ok:'✅ Correct! Don\'t + base verb. Short, direct, natural.',bad:'❌ "Not show" is not correct English. "Do not to show" has an extra "to". The correct form is: Don\'t + base verb.'},
+};
+function chkMCQ(el,group,choice,correct,fbId){
+  const opts=document.getElementById(group).querySelectorAll('.mop');
+  if(el.classList.contains('lk'))return;
+  opts.forEach(o=>o.classList.add('lk'));
+  const fb=document.getElementById(fbId);
+  if(choice===correct){
+    el.classList.add('ok');
+    fb.className='fb ok show';fb.innerHTML=mcqFB[group].ok;
+  } else {
+    el.classList.add('no');
+    opts.forEach(o=>{if(o.querySelector('.oky').textContent===correct)o.classList.add('rev');});
+    fb.className='fb bad show';fb.innerHTML=mcqFB[group].bad;
+  }
+  const sp=document.getElementById(group+'-spk'); if(sp)sp.style.display='block';
+  const nv=document.getElementById(group+'-nav'); if(nv)nv.style.display='flex';
+}
+
+/* ════════════════════════════════════════
+   FILL BLANK
+════════════════════════════════════════ */
+function chkBlank(inputId,expected,fbId,msg){
+  const inp=document.getElementById(inputId);
+  const fb=document.getElementById(fbId);
+  const val=inp.value.trim().toLowerCase();
+  if(!val){fb.className='fb bad show';fb.innerHTML='⚠ Type your answer first.';return;}
+  if(val===expected.toLowerCase()){
+    inp.classList.add('ok');inp.classList.remove('no');
+    fb.className='fb ok show';fb.innerHTML='✅ '+msg;
+    inp.disabled=true;
+  } else {
+    inp.classList.add('no');inp.classList.remove('ok');
+    fb.className='fb bad show';fb.innerHTML='❌ Not quite — the answer is <strong>'+expected+'</strong>.';
+    setTimeout(()=>{inp.classList.remove('no');inp.value='';},1100);
+  }
+}
+
+/* ════════════════════════════════════════
+   PREDICTION
+════════════════════════════════════════ */
+function showPredFB(){
+  const boxes=document.querySelectorAll('#pred-checks input[type=checkbox]');
+  const count=Array.from(boxes).filter(b=>b.checked).length;
+  const fb=document.getElementById('pred-fb');
+  fb.className='fb gold show';
+  fb.innerHTML=`⚔ You predicted ${count} items. All 5 of these things appear in the trailer! Watch carefully to verify — which came true exactly as you imagined?`;
+  document.getElementById('pred-spk').style.display='block';
+  document.getElementById('pred-nav').style.display='flex';
+}
+
+/* ════════════════════════════════════════
+   POST-VIDEO INTERPRETATION
+════════════════════════════════════════ */
+function showEmoFB(){
+  const txt=document.getElementById('emo-ta').value.trim();
+  const fb=document.getElementById('emo-fb');
+  if(txt.length<10){fb.className='fb bad show';fb.innerHTML='⚠ Write at least one complete sentence before sharing.';return;}
+  fb.className='fb gold show';
+  fb.innerHTML='⚔ Good interpretation! There is no single correct answer here — the goal is to think critically about what you saw and felt. Now speak about it!';
+  document.getElementById('emo-spk').style.display='block';
+  document.getElementById('emo-nav').style.display='flex';
+}
+
+/* ════════════════════════════════════════
+   MATCHING
+════════════════════════════════════════ */
+// witness(0)→see(1), mercy(1)→compassion(4), survive(2)→living(0), worthy(3)→deserving(3), cycle(4)→pattern(2)
+const matchAns={0:1,1:4,2:0,3:3,4:2};
+let matchSel={side:null,idx:null},matchDone=0;
+function matchClick(side,idx){
+  const el=document.getElementById('m'+side+idx);
+  if(el.classList.contains('mok'))return;
+  if(matchSel.side===null){
+    if(matchSel.idx!==null){const p=document.getElementById('m'+matchSel.side+matchSel.idx);if(p)p.classList.remove('sel');}
+    el.classList.add('sel');matchSel={side,idx};
+  } else {
+    if(matchSel.side===side){
+      document.getElementById('m'+matchSel.side+matchSel.idx).classList.remove('sel');
+      el.classList.add('sel');matchSel={side,idx};return;
+    }
+    const li=matchSel.side==='l'?matchSel.idx:idx;
+    const ri=matchSel.side==='r'?matchSel.idx:idx;
+    const lel=document.getElementById('ml'+li);
+    const rel=document.getElementById('mr'+ri);
+    lel.classList.remove('sel');
+    if(matchAns[li]===ri){
+      lel.classList.add('mok');rel.classList.add('mok');matchDone++;
+      if(matchDone===5){
+        const fb=document.getElementById('match-fb');
+        fb.className='fb ok show';fb.innerHTML='⚔ All 5 matched! The vocabulary of this realm is yours.';
+        document.getElementById('match-spk').style.display='block';
+        document.getElementById('match-nav').style.display='flex';
+      }
+    } else {
+      lel.classList.add('mno');rel.classList.add('mno');
+      setTimeout(()=>{lel.classList.remove('mno','sel');rel.classList.remove('mno','sel');},900);
+    }
+    matchSel={side:null,idx:null};
+  }
+}
+
+/* ════════════════════════════════════════
+   DECISION
+════════════════════════════════════════ */
+function pickDec(el){
+  document.getElementById('dec-opts').querySelectorAll('.dcard').forEach(c=>c.classList.remove('chosen'));
+  el.classList.add('chosen');
+  const fb=document.getElementById('dec-fb');
+  fb.className='fb gold show';
+  fb.innerHTML='⚔ A choice has been made. Every choice in Kratos\'s world has weight. Now defend it.';
+  document.getElementById('dec-spk').style.display='block';
+  document.getElementById('dec-nav').style.display='flex';
+}
+
+/* ════════════════════════════════════════
+   FINAL RATING
+════════════════════════════════════════ */
+const finalMsg={
+  A:{cls:'ok',txt:'⚔ GOD TIER! The student commanded this language — imperatives, vocabulary, analysis and real-life connection all used naturally. Assign the homework mission!'},
+  B:{cls:'info',txt:'⚔ WARRIOR LEVEL! Strong performance with a few gaps. 1–2 more sessions will seal the grammar. Assign the homework.'},
+  C:{cls:'bad',txt:'⚔ APPRENTICE — still forging the skill. More speaking and vocabulary repetition needed. Still assign the homework — it will help!'}
+};
+function rateFinal(el,choice){
+  document.querySelectorAll('#s28 .dcard').forEach(c=>c.classList.remove('chosen'));
+  el.classList.add('chosen');
+  const fb=document.getElementById('final-fb');
+  fb.className='fb '+finalMsg[choice].cls+' show';fb.innerHTML=finalMsg[choice].txt;
+  document.getElementById('final-nav').style.display='flex';
+}
+
+/* ════════════════════════════════════════
+   UTILITY — show multiple hidden elements
+════════════════════════════════════════ */
+function showEls(ids){
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=el.classList.contains('nav-row')?'flex':'block';
+  });
+}
+
+updNav();
+</script>
+</body>
+</html>
